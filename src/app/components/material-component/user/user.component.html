@@ -1,0 +1,71 @@
+<!-- <mat-card>
+    <mat-card-content>
+        <b><span> Manage User</span></b>
+    </mat-card-content>
+</mat-card>
+<hr> -->
+<mat-card>
+        <mat-card-header>
+            <mat-form-field appearance="fill">
+                <mat-label><mat-icon>search</mat-icon></mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input> 
+            </mat-form-field>
+            <span class="spacer"></span>
+            <button  (click)="handleSignupAction()" mat-raised-button color="primary" align="end">
+                <mat-icon>add_circle</mat-icon> Ajout
+            </button>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="response_table responsivetable">
+                <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="nom">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>nom</th>
+                        <td mat-cell *matCellDef="let element">{{element.nom}}</td>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="prenom">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>prenom</th>
+                        <td mat-cell *matCellDef="let element">{{element.prenom}}</td>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="email">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>Email </th>
+                        <td mat-cell *matCellDef="let element">{{element.email}}</td>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="telephone">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>telephone</th>
+                        <td mat-cell *matCellDef="let element">{{element.telephone}}</td>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="profession">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>Profession</th>
+                        <td mat-cell *matCellDef="let element">{{element.profession}}</td>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="role">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>role</th>
+                        <td mat-cell *matCellDef="let element">{{element.role}}</td>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="active">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let element" class="action-link">
+                            <mat-slide-toggle (change)="onChange(element.id)"
+                                matTooltip="Activate or Deactivate User" [checked]="element.active"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayColumns;sticky:true"></tr>
+                    <tr mat-row *matRowDef="let row; columns:displayColumns;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <br>
+        <mat-card-footer>
+            <mat-paginator [pageSizeOptions]="[4,5,8,10,15,20]" showFirstLastButtons></mat-paginator>
+        </mat-card-footer>
+
+</mat-card>
+<br>
+
+

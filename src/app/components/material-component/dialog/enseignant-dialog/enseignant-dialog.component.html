@@ -1,0 +1,97 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction.action}} Enseignant</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="enseignantForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Nom</mat-label>
+                    <input matInput formControlName="nom" required>
+                    <mat-error *ngIf="enseignantForm.controls.nom.touched && enseignantForm.controls.nom.invalid">
+                        <span *ngIf="enseignantForm.controls.nom.errors.required">This field is mandatory</span>
+                        <span *ngIf="enseignantForm.controls.nom.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Prenom</mat-label>
+                    <input matInput formControlName="prenom" required>
+                    <mat-error *ngIf="enseignantForm.controls.prenom.touched && enseignantForm.controls.prenom.invalid">
+                        <span *ngIf="enseignantForm.controls.prenom.errors.required">This field is mandatory</span>
+                        <span *ngIf="enseignantForm.controls.prenom.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+                <mat-form-field class="mat-30">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="datenaissance">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Telephone</mat-label>
+                    <input matInput formControlName="telephone" required>
+                    <mat-error *ngIf="enseignantForm.controls.telephone.touched && enseignantForm.controls.telephone.invalid">
+                        <span *ngIf="enseignantForm.controls.telephone.errors.required">This field is mandatory</span>
+                        <span *ngIf="enseignantForm.controls.telephone.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+                  
+            </div>
+
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" required>
+                    <mat-error *ngIf="enseignantForm.controls.email.touched && enseignantForm.controls.email.invalid">
+                        <span *ngIf="enseignantForm.controls.email.errors.required">This field is mandatory</span>
+                        <span *ngIf="enseignantForm.controls.email.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Matiere</mat-label>
+                    <mat-select formControlName="matiere" > 
+                        <mat-option *ngFor="let mat of matieres" [value]="mat.id">
+                            {{mat.libelle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+                
+                <mat-radio-group formControlName="sexe" color="primary">
+                    <mat-radio-button value="HOMME">HOMME</mat-radio-button>
+                    <mat-radio-button value="FEMME">FEMME</mat-radio-button>
+                    <mat-radio-button value="AUTRE">AUTRES</mat-radio-button>
+                </mat-radio-group>
+                
+            </div>
+
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(enseignantForm.valid && enseignantForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+

@@ -1,0 +1,37 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction.action}} Matiere</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="matiereForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Libelle</mat-label>
+                    <input matInput formControlName="libelle" required>
+                    <mat-error *ngIf="matiereForm.controls.libelle.touched && matiereForm.controls.libelle.invalid">
+                        <span *ngIf="matiereForm.controls.libelle.errors.required">This field is mandatory</span>
+                        <span *ngIf="matiereForm.controls.libelle.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(matiereForm.valid && matiereForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>

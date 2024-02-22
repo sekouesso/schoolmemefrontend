@@ -1,0 +1,144 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction.action}} Tarifs</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="tarifForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>code</mat-label>
+                    <input matInput formControlName="code" required readonly>
+                    <mat-error *ngIf="tarifForm.controls.code.touched && tarifForm.controls.code.invalid">
+                        <span *ngIf="tarifForm.controls.code.errors.required">This field is mandatory</span>
+                        <span *ngIf="tarifForm.controls.code.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>annee</mat-label>
+                    <input matInput formControlName="annee" required readonly>
+                    <mat-error *ngIf="tarifForm.controls.annee.touched && tarifForm.controls.annee.invalid">
+                        <span *ngIf="tarifForm.controls.annee.errors.required">This field is mandatory</span>
+                        <span *ngIf="tarifForm.controls.annee.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>montant</mat-label>
+                    <input matInput formControlName="montant" required>
+                    <mat-error *ngIf="tarifForm.controls.montant.touched && tarifForm.controls.montant.invalid">
+                        <span *ngIf="tarifForm.controls.montant.errors.required">This field is mandatory</span>
+                        <span *ngIf="tarifForm.controls.montant.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="mat-30">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker4" formControlName="date4">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>montant1</mat-label>
+                    <input matInput formControlName="montant1" required>
+                    <mat-error *ngIf="tarifForm.controls.montant1.touched && tarifForm.controls.montant1.invalid">
+                        <span *ngIf="tarifForm.controls.montant1.errors.required">This field is mandatory</span>
+                        <span *ngIf="tarifForm.controls.montant1.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="mat-30">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="date1">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>montant2</mat-label>
+                    <input matInput formControlName="montant2" required>
+                    <mat-error *ngIf="tarifForm.controls.montant2.touched && tarifForm.controls.montant2.invalid">
+                        <span *ngIf="tarifForm.controls.montant2.errors.required">This field is mandatory</span>
+                        <span *ngIf="tarifForm.controls.montant2.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="mat-30">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker2" formControlName="date2">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>montant3</mat-label>
+                    <input matInput formControlName="montant3" required>
+                    <mat-error *ngIf="tarifForm.controls.montant3.touched && tarifForm.controls.montant3.invalid">
+                        <span *ngIf="tarifForm.controls.montant3.errors.required">This field is mandatory</span>
+                        <span *ngIf="tarifForm.controls.montant3.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="mat-30">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker3" formControlName="date3">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <mat-form-field fxFlex appearance="fill">
+                <mat-label>frais</mat-label>
+                <input matInput formControlName="frais" required>
+                <mat-error *ngIf="tarifForm.controls.frais.touched && tarifForm.controls.frais.invalid">
+                    <span *ngIf="tarifForm.controls.frais.errors.required">This field is mandatory</span>
+                    <span *ngIf="tarifForm.controls.frais.errors.pattern">This field is invalid.</span>
+                </mat-error>
+            </mat-form-field>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>cycle</mat-label>
+                    <mat-select formControlName="cycleId">
+                        <mat-option *ngFor="let cycle of cycles" [value]="cycle.id">
+                            {{cycle.libelle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>anneScolaire</mat-label>
+                    <mat-select formControlName="anneScolaireId" > 
+                        <mat-option *ngFor="let ann of anneScolaires" [value]="ann.id">
+                            {{ann.annee}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(tarifForm.valid && tarifForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>

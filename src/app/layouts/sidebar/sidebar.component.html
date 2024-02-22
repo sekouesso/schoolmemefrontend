@@ -1,0 +1,231 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+    <a class="brand-link">
+        <img src="assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">School.com</span>
+    </a>
+
+    <div class="sidebar">
+
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="assets/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Alexander Pierce</a>
+            </div>
+        </div>
+
+
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <li class="nav-item">
+                    <a  class="nav-link" routerLink="/school/dashboard" routerLinkActive="active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Tableau de Bord
+                        </p>
+                    </a>
+                </li>
+                <!-- <li class="nav-item {{setMenuClass('/dashboard','menu-open')}}" >
+                    <a  class="nav-link {{setMenuClass('/dashboard','active')}}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Tableau de bord
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/dashboard')}}" routerLink="/school/dashboard">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tableau de bord</p>
+                            </a>
+                        </li>
+                       
+                    </ul>
+                </li> -->
+                <li class="nav-item {{setMenuClass('/cours','menu-open')}}"  id="cours" (click)="addClass('cours')" [ngClass]="{'menu-open': activeElement === 'cours'}">
+                    <a  class="nav-link {{setMenuClass('/cours','active')}}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Cours
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/cours/cours')}}" routerLink="/school/cours/cours">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>cours</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/cours/matiere')}}" routerLink="/school/cours/matiere">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Matiere</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/cours/classe')}}" routerLink="/school/cours/classe">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>classe</p>
+                            </a>
+                        </li>
+                       
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/cours/emploi')}}" routerLink="/school/cours/emploi">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>emploi</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item {{setMenuClass('/eleves','menu-open')}}" id="eleves" (click)="addClass('eleves')" [ngClass]="{'menu-open': activeElement === 'eleves'}">
+                    <a  class="nav-link {{setMenuClass('/eleves','active')}}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            eleves
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/eleves/eleve')}}" routerLink="/school/eleves/eleve">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>eleves</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/eleves/inscription')}}" routerLink="/school/eleves/inscription">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>inscription</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/eleves/reglement')}}" routerLink="/school/eleves/reglement">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>reglement</p>
+                            </a>
+                        </li>
+                      
+                    </ul>
+                </li>
+
+                <li class="nav-item {{setMenuClass('/enseignant','menu-open')}}" id="enseignant" (click)="addClass('enseignant')" [ngClass]="{'menu-open': activeElement === 'enseignant'}">
+                    <a  class="nav-link {{setMenuClass('/enseignant','active')}}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            enseignant
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/enseignant/enseignant')}}" routerLink="/school/enseignant/enseignant">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>enseignant</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/enseignant/note')}}" routerLink="/school/enseignant/note">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>note</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/enseignant/evaluation')}}" routerLink="/school/enseignant/evaluation">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>evaluation</p>
+                            </a>
+                        </li>
+                       
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/enseignant/absence')}}" routerLink="/school/enseignant/absence">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>absence</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- <li class="nav-item {{setMenuClass('/tarifs','menu-open')}}" >
+                    <a  class="nav-link {{setMenuClass('/tarifs','active')}}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Tarifs
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/tarifs')}}" routerLink="/school/tarifs">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tarifs</p>
+                            </a>
+                        </li>
+                       
+                    </ul>
+                </li> -->
+                <li class="nav-item">
+                    <a  class="nav-link" routerLink="/school/tarifs" routerLinkActive="active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Tarifs
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a  class="nav-link" routerLink="/school/utilisateur" routerLinkActive="active">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Utilisateurs
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Starter Pages
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Active Page</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Inactive Page</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Simple Link
+                            <span class="right badge badge-danger">New</span>
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav> -->
+
+    </div>
+
+</aside>
