@@ -21,9 +21,9 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { HomeComponent } from './components/home/home.component';
 import { SchoolComponent } from './components/school/school.component';
-import { CoefficientComponent } from './components/coefficient/coefficient.component';
-import { EleveComponent } from './components/eleve/eleve.component';
-import { EvaluationComponent } from './components/evaluation/evaluation.component';
+import { CoefficientComponent } from './components/material-component/coefficient/coefficient.component';
+import { EleveComponent } from './components/material-component/eleve/eleve.component';
+import { EvaluationComponent } from './components/material-component/evaluation/evaluation.component';
 import { MenuopenDirective } from './menuopen.directive';
 import { DatePipe } from '@angular/common';
 

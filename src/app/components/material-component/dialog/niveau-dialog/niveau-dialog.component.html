@@ -1,0 +1,50 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction.action}} Niveau</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="niveauForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Libelle</mat-label>
+                    <input matInput formControlName="libelle" required readonly>
+                    <mat-error *ngIf="niveauForm.controls.libelle.touched && niveauForm.controls.libelle.invalid">
+                        <span *ngIf="niveauForm.controls.libelle.errors.required">This field is mandatory</span>
+                        <span *ngIf="niveauForm.controls.libelle.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Cycle</mat-label>
+                    <mat-select formControlName="cycleId">
+                        <mat-option *ngFor="let cycle of cycles" [value]="cycle.id">
+                            {{cycle.libelle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(niveauForm.valid && niveauForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+
+
+
+

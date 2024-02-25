@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,6 +10,21 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
 
   router = inject(Router);
+  public authService = inject(AuthService);
+  currentUser:any;
+  
+  ngOnInit() {
+    // this.authService.findByEmail().subscribe({
+    //   next: (response)=>{
+    //     this.currentUser=response;
+    //   },
+    //   error: (error)=>{
+    //     console.log(error.error?.message);
+        
+    //   }
+    // })
+    
+  }
 
   currentAction :any;
   menu: any;

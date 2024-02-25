@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4 responsivesidebar">
 
     <a class="brand-link">
         <img src="assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -70,6 +70,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/cours/coefficient')}}" routerLink="/school/cours/coefficient">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Coefficient</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a  class="nav-link {{setMenuActive('/school/cours/classe')}}" routerLink="/school/cours/classe">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>classe</p>
@@ -133,7 +139,13 @@
                         <li class="nav-item">
                             <a  class="nav-link {{setMenuActive('/school/enseignant/note')}}" routerLink="/school/enseignant/note">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>note</p>
+                                <p>Note</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/enseignant/typenote')}}" routerLink="/school/enseignant/typenote">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Type de note</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -149,6 +161,64 @@
                                 <p>absence</p>
                             </a>
                         </li>
+                    </ul>
+                </li>
+                <li class="nav-item {{setMenuClass('/parametre','menu-open')}}" id="parametre" (click)="addClass('parametre')" [ngClass]="{'menu-open': activeElement === 'parametre'}">
+                    <a  class="nav-link {{setMenuClass('/parametre','active')}}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            parametre
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/parametre/jours')}}" routerLink="/school/parametre/jours">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Jours</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/parametre/horaire')}}" routerLink="/school/parametre/horaire">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Horaire</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/parametre/appreciation')}}" routerLink="/school/parametre/appreciation">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Appreciation</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/parametre/cycle')}}" routerLink="/school/parametre/cycle">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>cycle</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/parametre/niveau')}}" routerLink="/school/parametre/niveau">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>niveau</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/parametre/anneScolaire')}}" routerLink="/school/parametre/anneScolaire">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Annee Scolaire</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a  class="nav-link {{setMenuActive('/school/parametre/notification')}}" routerLink="/school/parametre/notification">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Notification</p>
+                            </a>
+                        </li>
+                        
                     </ul>
                 </li>
                 <!-- <li class="nav-item {{setMenuClass('/tarifs','menu-open')}}" >

@@ -18,7 +18,7 @@ export class TypeNoteService {
   }
 
   update(data:any){
-    return this.http.post(this.url+'/update',data,{
+    return this.http.put(this.url+'/update',data,{
       headers:new HttpHeaders().set("Content-Type","Application/json")})
   }
 
@@ -27,7 +27,7 @@ export class TypeNoteService {
   }
 
   delete(id:any){
-    return this.http.post(this.url+'/delete/'+id,{
+    return this.http.delete(this.url+'/delete/'+id,{
       headers:new HttpHeaders().set("Content-Type","Application/json")})
   }
 

@@ -1,0 +1,73 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction}} Coefficient</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="coefficientForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Code</mat-label>
+                    <input matInput formControlName="code" required readonly>
+                    <mat-error *ngIf="coefficientForm.controls.code.touched && coefficientForm.controls.code.invalid">
+                        <span *ngIf="coefficientForm.controls.code.errors.required">This field is mandatory</span>
+                        <span *ngIf="coefficientForm.controls.code.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Matiere</mat-label>
+                    <mat-select formControlName="matiereId">
+                        <mat-option *ngFor="let matiere of matieres" [value]="matiere.id">
+                            {{matiere.libelle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Classe</mat-label>
+                    <mat-select formControlName="classeId">
+                        <mat-option *ngFor="let classe of classes" [value]="classe.id">
+                            {{classe.libelle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>coefficient</mat-label>
+                    <input matInput formControlName="coef" required>
+                    <mat-error *ngIf="coefficientForm.controls.coef.touched && coefficientForm.controls.coef.invalid">
+                        <span *ngIf="coefficientForm.controls.coef.errors.required">This field is mandatory</span>
+                        <span *ngIf="coefficientForm.controls.coef.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(coefficientForm.valid && coefficientForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+
+
+
+

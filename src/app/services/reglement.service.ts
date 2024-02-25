@@ -27,7 +27,7 @@ export class ReglementService {
       headers:new HttpHeaders().set("Content-Type","Application/json")})
   }
 
-  getAllMatieres(){
+  getAll(){
     return this.http.get(this.url+'/getAll');
   }
 

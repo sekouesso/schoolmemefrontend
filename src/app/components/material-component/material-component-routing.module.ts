@@ -15,11 +15,15 @@ import { NoteComponent } from './note/note.component';
 import { JoursComponent } from './jours/jours.component';
 import { HoraireComponent } from './horaire/horaire.component';
 import { AppreciationComponent } from './appreciation/appreciation.component';
-import { CoefficientComponent } from '../coefficient/coefficient.component';
-import { EleveComponent } from '../eleve/eleve.component';
+import { CoefficientComponent } from './coefficient/coefficient.component';
+import { EleveComponent } from './eleve/eleve.component';
 import { InscriptionComponent } from './inscription/inscription.component';
-import { EvaluationComponent } from '../evaluation/evaluation.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
 import { UserComponent } from './user/user.component';
+import { TypenoteComponent } from './typenote/typenote.component';
+import { CycleComponent } from './cycle/cycle.component';
+import { NiveauComponent } from './niveau/niveau.component';
+import { AnneScolaireComponent } from './anne-scolaire/anne-scolaire.component';
 
 const routes: Routes = [
   {
@@ -59,7 +63,7 @@ const routes: Routes = [
   component: EvaluationComponent
 },
 {
-  path:'notification',
+  path:'parametre/notification',
   component: NotificationComponent   
 },
 {
@@ -67,16 +71,32 @@ const routes: Routes = [
   component: NoteComponent   
 },
 {
-  path:'jours',
+  path:'parametre/jours',
   component: JoursComponent   
 },
 {
-  path:'horaire',
+  path:'parametre/horaire',
   component: HoraireComponent   
 },
 {
-  path:'apreciation',
+  path:'parametre/appreciation',
   component: AppreciationComponent   
+},
+{
+  path:'parametre/cycle',
+  component: CycleComponent   
+},
+{
+  path:'parametre/niveau',
+  component: NiveauComponent  
+},
+{
+  path:'parametre/anneScolaire',
+  component: AnneScolaireComponent   
+},
+{
+  path:'enseignant/typenote',
+  component: TypenoteComponent   
 },
 {
   path:'cours/coefficient',

@@ -40,8 +40,9 @@ export class HeaderComponent {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent,dialogConfig);
     const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response)=>{
       dialogRef.close();
-      localStorage.clear();
-      this.router.navigate(['/']);
+      this.authService.logout();
+      //localStorage.clear();
+      //this.router.navigate(['/']);
     });
   }
 

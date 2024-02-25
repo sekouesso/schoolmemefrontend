@@ -33,4 +33,9 @@ export class JourService {
   getById(id:any){
     return this.http.get(this.url+'/getById/'+id);
   }
+  getNumero() {
+    return this.http.get(`${this.url}/getcode`,{
+      headers:new HttpHeaders().set("Content-Type","Application/json")
+    });
+  }
 }

@@ -23,9 +23,10 @@ export class AuthService {
       return this.http.post(`${this.baseUrl}/login`, data, options)
   }
   public profile(){
-    
       return this.http.get(`${this.baseUrl}/profile`)
   }
+
+ 
 
   loadProfile(data: any){
     this.isAuthenticated = true;
@@ -33,7 +34,7 @@ export class AuthService {
     let decodeJwt:any = jwtDecode(this.accessToken);
     this.username = decodeJwt.sub;
     this.roles = decodeJwt.scope;
-    window.localStorage.setItem('jwt-token', this.accessToken);
+    window.localStorage.setItem('token', this.accessToken);
   }
 
   logout() {
@@ -41,15 +42,21 @@ export class AuthService {
     this.accessToken = undefined;
     this.username = undefined;
     this.roles = undefined;
-    window.localStorage.removeItem("access-token");
-    this.router.navigate(['/login']);
+    window.localStorage.removeItem("token");
+    this.router.navigate(['/']);
   }
 
   loadJwtTokenFromLocalStorage() {
-    let token = window.localStorage.getItem('jwt-token');
+    let token = window.localStorage.getItem('token');
     if(token){
       this.loadProfile({"access-token":token});
-      this.router.navigate(['/dashboard']);
+      this.findByEmail();
+      this.router.navigate(['/school/dashboard']);
     }
   }
+
+  public findByEmail(){
+    return this.http.get(`${this.baseUrl}/findByEmail/${this.username}`)
+}
+
 }

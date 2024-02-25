@@ -215,10 +215,6 @@ edit(){
   })
 }
 
-
-
-
-
   transformDate(date: any) {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
   }

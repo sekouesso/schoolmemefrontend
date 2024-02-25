@@ -33,6 +33,30 @@ import { JoursComponent } from './jours/jours.component';
 import { HoraireComponent } from './horaire/horaire.component';
 import { EnseignantDialogComponent } from './dialog/enseignant-dialog/enseignant-dialog.component';
 import { TarifsDialogComponent } from './dialog/tarifs-dialog/tarifs-dialog.component';
+import { EleveDialogComponent } from './dialog/eleve-dialog/eleve-dialog.component';
+import { CycleDialogComponent } from './dialog/cycle-dialog/cycle-dialog.component';
+import { EmploiDialogComponent } from './dialog/emploi-dialog/emploi-dialog.component';
+import { NoteDialogComponent } from './dialog/note-dialog/note-dialog.component';
+import { AbsenceDialogComponent } from './dialog/absence-dialog/absence-dialog.component';
+import { AppreciationDialogComponent } from './dialog/appreciation-dialog/appreciation-dialog.component';
+import { CoefficientDialogComponent } from './dialog/coefficient-dialog/coefficient-dialog.component';
+import { ClasseDialogComponent } from './dialog/classe-dialog/classe-dialog.component';
+import { EvaluationDialogComponent } from './dialog/evaluation-dialog/evaluation-dialog.component';
+import { NotificationDialogComponent } from './dialog/notification-dialog/notification-dialog.component';
+import { JoursDialogComponent } from './dialog/jours-dialog/jours-dialog.component';
+import { HoraireDialogComponent } from './dialog/horaire-dialog/horaire-dialog.component';
+import { AnneScolaireDialogComponent } from './dialog/anne-scolaire-dialog/anne-scolaire-dialog.component';
+import { LabsenceDialogComponent } from './dialog/labsence-dialog/labsence-dialog.component';
+import { LnoteDialogComponent } from './dialog/lnote-dialog/lnote-dialog.component';
+import { LemploiDialogComponent } from './dialog/lemploi-dialog/lemploi-dialog.component';
+import { InscriptionDialogComponent } from './dialog/inscription-dialog/inscription-dialog.component';
+import { ReglementDialogComponent } from './dialog/reglement-dialog/reglement-dialog.component';
+import { NiveauDialogComponent } from './dialog/niveau-dialog/niveau-dialog.component';
+import { TypenoteDialogComponent } from './dialog/typenote-dialog/typenote-dialog.component';
+import { CoursDialogComponent } from './dialog/cours-dialog/cours-dialog.component';
+import { TypenoteComponent } from './typenote/typenote.component';
+import { CycleComponent } from './cycle/cycle.component';
+import { NiveauComponent } from './niveau/niveau.component';
 
 
 @NgModule({
@@ -63,7 +87,31 @@ import { TarifsDialogComponent } from './dialog/tarifs-dialog/tarifs-dialog.comp
     JoursComponent,
     HoraireComponent,
     EnseignantDialogComponent,
-    TarifsDialogComponent
+    TarifsDialogComponent,
+    EleveDialogComponent,
+    CycleDialogComponent,
+    EmploiDialogComponent,
+    NoteDialogComponent,
+    AbsenceDialogComponent,
+    AppreciationDialogComponent,
+    CoefficientDialogComponent,
+    ClasseDialogComponent,
+    EvaluationDialogComponent,
+    NotificationDialogComponent,
+    JoursDialogComponent,
+    HoraireDialogComponent,
+    AnneScolaireDialogComponent,
+    LabsenceDialogComponent,
+    LnoteDialogComponent,
+    LemploiDialogComponent,
+    InscriptionDialogComponent,
+    ReglementDialogComponent,
+    NiveauDialogComponent,
+    TypenoteDialogComponent,
+    CoursDialogComponent,
+    TypenoteComponent,
+    CycleComponent,
+    NiveauComponent
   ],
   imports: [
     CommonModule,

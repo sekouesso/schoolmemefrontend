@@ -34,6 +34,7 @@ export class AbsenceService {
   getById(id:any){
     return this.http.get(this.url+'/getById/'+id);
   }
+  
   getNumero(ann:any) {
     return this.http.get(`${this.url}/getnumero/${ann}`,{
       headers:new HttpHeaders().set("Content-Type","Application/json")

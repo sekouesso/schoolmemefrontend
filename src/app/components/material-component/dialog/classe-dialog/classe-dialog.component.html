@@ -1,0 +1,60 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction }} Classe</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="classeForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Code</mat-label>
+                    <input matInput formControlName="code" required readonly>
+                    <mat-error *ngIf="classeForm.controls.code.touched && classeForm.controls.code.invalid">
+                        <span *ngIf="classeForm.controls.code.errors.required">This field is mandatory</span>
+                        <span *ngIf="classeForm.controls.code.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Libelle</mat-label>
+                    <input matInput formControlName="libelle" required>
+                    <mat-error *ngIf="classeForm.controls.libelle.touched && classeForm.controls.libelle.invalid">
+                        <span *ngIf="classeForm.controls.libelle.errors.required">This field is mandatory</span>
+                        <span *ngIf="classeForm.controls.libelle.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Niveau</mat-label>
+                    <mat-select formControlName="niveauId">
+                        <mat-option *ngFor="let niveau of niveaux" [value]="niveau.id">
+                            {{niveau.libelle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(classeForm.valid && classeForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+
+
+

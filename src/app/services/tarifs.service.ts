@@ -15,7 +15,7 @@ export class TarifsService {
   ) { }
 
 
-  getData(id: string) {
+  getData(id: any) {
     return this.httpClient.get(`${this.url}/getById/${id}`,{
       headers:new HttpHeaders().set("Content-Type","Application/json")
     });

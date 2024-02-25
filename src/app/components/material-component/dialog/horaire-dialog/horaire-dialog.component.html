@@ -1,0 +1,49 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction.action}} Horaire</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="horaireForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Code</mat-label>
+                    <input matInput formControlName="code" required readonly>
+                    <mat-error *ngIf="horaireForm.controls.code.touched && horaireForm.controls.code.invalid">
+                        <span *ngIf="horaireForm.controls.code.errors.required">This field is mandatory</span>
+                        <span *ngIf="horaireForm.controls.code.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>Heure</mat-label>
+                    <input matInput formControlName="heure" required>
+                    <mat-error *ngIf="horaireForm.controls.heure.touched && horaireForm.controls.heure.invalid">
+                        <span *ngIf="horaireForm.controls.heure.errors.required">This field is mandatory</span>
+                        <span *ngIf="horaireForm.controls.heure.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(horaireForm.valid && horaireForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+
+

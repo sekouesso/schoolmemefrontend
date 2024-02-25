@@ -1,0 +1,114 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction}} Cours</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="coursForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>numero</mat-label>
+                    <input matInput formControlName="numero" required readonly>
+                    <mat-error *ngIf="coursForm.controls.numero.touched && coursForm.controls.numero.invalid">
+                        <span *ngIf="coursForm.controls.numero.errors.required">This field is mandatory</span>
+                        <span *ngIf="coursForm.controls.numero.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>annee</mat-label>
+                    <input matInput formControlName="annee" required readonly>
+                    <mat-error *ngIf="coursForm.controls.annee.touched && coursForm.controls.annee.invalid">
+                        <span *ngIf="coursForm.controls.annee.errors.required">This field is mandatory</span>
+                        <span *ngIf="coursForm.controls.annee.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+                <mat-form-field class="mat-30">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="datecours">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex appearance="fill">
+                    <mat-label>trimestre</mat-label>
+                    <mat-select formControlName="trimestre" > 
+                        <mat-option value=""> Choisir le Trimestre </mat-option>
+                        <mat-option value="PREMIER TRIMESTRE"> PREMIER TRIMESTRE </mat-option>
+                        <mat-option value="DEUXIEME TRIMESTRE"> DEUXIEME TRIMESTRE </mat-option>
+                        <mat-option value="TROISIEME TRIMESTRE"> TROISIEME TRIMESTRE </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="coursForm.controls.trimestre.touched && coursForm.controls.trimestre.invalid">
+                        <span *ngIf="coursForm.controls.trimestre.errors.required">This field is mandatory</span>
+                        <span *ngIf="coursForm.controls.trimestre.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+                  
+            </div>
+
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>anneScolaire</mat-label>
+                    <mat-select formControlName="anneScolaireId" > 
+                        <mat-option *ngFor="let anneScolaire of anneScolaires" [value]="anneScolaire.id">
+                            {{anneScolaire.annee}} 
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>horaire</mat-label>
+                    <mat-select formControlName="horaireId" > 
+                        <mat-option *ngFor="let horaire of horaires" [value]="horaire.id">
+                            {{horaire.heure}} 
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+                
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>enseignant</mat-label>
+                    <mat-select formControlName="enseignantId" > 
+                        <mat-option *ngFor="let enseignant of enseignants" [value]="enseignant.id">
+                            {{enseignant.nom}} {{enseignant.prenom}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>classe</mat-label>
+                    <mat-select formControlName="classeId" > 
+                        <mat-option *ngFor="let classe of classes" [value]="classe.id">
+                            {{classe.libelle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(coursForm.valid && coursForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+
+
+
+

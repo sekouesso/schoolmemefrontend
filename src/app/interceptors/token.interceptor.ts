@@ -42,8 +42,8 @@ export class TokenInterceptor implements HttpInterceptor {
             //console.log(error.status);
             
             if(error.status ==401 || error.status === 403){
-              //authService.logout();
-              router.navigateByUrl('/');
+              authService.logout();
+             // router.navigateByUrl('/');
             }
             return throwError(error.message)
           })

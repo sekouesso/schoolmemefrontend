@@ -18,6 +18,7 @@ export class LoginComponent {
   hide=true;
   loginForm:any = FormGroup;
   responseMessage:any='test response';
+  parent: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -46,7 +47,21 @@ export class LoginComponent {
       next:(response:any)=>{
       this.ngxService.stop();
       this.dialogRef.close();
-      localStorage.setItem('token',response["access-token"]);
+      //localStorage.setItem('token',response["access-token"]);
+      this.authService.loadProfile(response);
+      this.authService.findByEmail().subscribe(
+        {
+          next: (data: any) => {
+            this.parent = data;
+            console.log(data);
+            
+          },
+          error: (error: any) => {
+            console.log(error.error?.message);
+            
+          },
+        }
+      );
       this.snackbarService.openSnackbar("success","")
       this.router.navigate(['/school/dashboard']);
     },error:(error:any)=>{
