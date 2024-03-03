@@ -18,7 +18,7 @@ export class AbsenceService {
   }
 
   update(data:any){
-    return this.http.post(this.url+'/update',data,{
+    return this.http.put(this.url+'/update',data,{
       headers:new HttpHeaders().set("Content-Type","Application/json")})
   }
 

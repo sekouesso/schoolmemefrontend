@@ -15,6 +15,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       --mdc-snackbar-container-color: #43a446;
     }
   }
+  @import 'quill/dist/quill.snow.css';
 
   /* You can add global styles to this file, and also import other style files */
 
@@ -65,6 +66,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   flex: 1 auto;
 }
 
+
+
 .responsivetable{
   width: 100%;
   overflow-x: auto;
@@ -73,4 +76,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .responsivesidebar{
   height: 100vh !important;
   overflow-y: auto !important;
+}
+
+mat-form-field{
+  margin: 1%;
+  width: 48%;
 }

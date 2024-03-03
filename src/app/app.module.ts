@@ -26,6 +26,8 @@ import { EleveComponent } from './components/material-component/eleve/eleve.comp
 import { EvaluationComponent } from './components/material-component/evaluation/evaluation.component';
 import { MenuopenDirective } from './menuopen.directive';
 import { DatePipe } from '@angular/common';
+import { QuillModule } from 'ngx-quill';
+import { SharedModule } from './shared/shared/shared.module';
 
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -80,7 +82,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig ={
     HttpClientModule,
     MaterialModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    NgxUiLoaderHttpModule.forRoot({ showForeground: true })
+    QuillModule.forRoot(),
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
+    SharedModule
   ],
   providers: [
     provideAnimationsAsync(),

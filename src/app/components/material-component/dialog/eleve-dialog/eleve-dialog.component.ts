@@ -54,6 +54,7 @@ export class EleveDialogComponent {
       this.annee = (this.date).toString().substring(0, 4);
     this.eleveForm = this.fb.group({
       matricule: ['', [Validators.required]],
+      annee: [this.annee, [Validators.required]],
       nom:[null,[Validators.required, Validators.pattern(GlobalConstants.nomRegex)]],
       prenom:[null,[Validators.required, Validators.pattern(GlobalConstants.prenomRegex)]],
       telephone:[null,[Validators.required, Validators.pattern(GlobalConstants.telephoneRegex)]],
@@ -88,14 +89,14 @@ if(!this.dialogData.data){
         matricule: formData.matricule,
         telephone: formData.telephone,
         nom: formData.nom,
+        annee: formData.annee,
         prenom: formData.prenom,
         datenaissance: formData.datenaissance,
         lieunaissance: formData.lieunaissance,
         sexe: formData.sexe,
         classeId: formData.classe.id,
         parentId: formData.parent.id
-      }
-      
+      } 
       this.eleveForm.patchValue(data);
     }
 
@@ -151,6 +152,7 @@ add(){
     matricule: formData.matricule,
         telephone: formData.telephone,
         nom: formData.nom,
+        annee: formData.annee,
         prenom: formData.prenom,
         datenaissance: formData.datenaissance,
         lieunaissance: formData.lieunaissance,
@@ -158,6 +160,7 @@ add(){
         classeId: formData.classeId,
         parentId: formData.parentId
   }
+  
   this.eleveService.add(data).subscribe({
     next: (response:any) => {
       this.dialogRef.close();
@@ -181,9 +184,11 @@ add(){
 edit(){
   var formData = this.eleveForm.value;
   var data = {
+    id: this.dialogData.data.id,
     matricule: formData.matricule,
         telephone: formData.telephone,
         nom: formData.nom,
+        annee: formData.annee,
         prenom: formData.prenom,
         datenaissance: formData.datenaissance,
         lieunaissance: formData.lieunaissance,

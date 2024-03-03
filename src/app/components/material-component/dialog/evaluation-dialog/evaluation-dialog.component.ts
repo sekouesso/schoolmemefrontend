@@ -215,9 +215,7 @@ handleSubmit(){
 }
 add(){
   var formData = this.evaluationForm.value;
-  
   var data = {
-    id: this.dialogData.data.id,
     numero: formData.numero,
     dateEvaluation: formData.dateEvaluation,
     annee: formData.annee,
@@ -251,6 +249,7 @@ add(){
 edit(){
   var formData = this.evaluationForm.value;
   var data = {
+    id: this.dialogData.data.id,
     numero: formData.numero,
     dateEvaluation: formData.dateEvaluation,
     annee: formData.annee,

@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment.development';
 })
 export class EleveService {
   url = environment.apiUrl+"/api/eleve";
+  list: any = [];
   constructor(
     private http: HttpClient
   ) { }
@@ -15,6 +16,12 @@ export class EleveService {
     return this.http.get(`${this.url}/getnumero/${ann}`,{
       headers:new HttpHeaders().set("Content-Type","Application/json")
     });
+  }
+
+  updatestatus(id:any){
+    return this.http.patch(this.url+"/updatestatus/"+id,{
+      headers:new HttpHeaders().set("Content-Type","Application/json")
+    })
   }
 
   add(data:any){
@@ -50,6 +57,10 @@ export class EleveService {
 
   getAllByClasseId(classeId:any){
     return this.http.get(this.url+'/getByClasseId/'+classeId);
+  }
+
+  findAllByParentId(parentId:any){
+    return this.http.get(this.url+'/findAllByParentId/'+parentId);
   }
   
 }

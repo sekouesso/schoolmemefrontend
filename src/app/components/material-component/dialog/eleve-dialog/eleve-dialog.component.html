@@ -93,6 +93,15 @@
             </div>
 
             <div fxLayout="row wrap">
+
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>annee</mat-label>
+                    <input matInput formControlName="annee" required readonly>
+                    <mat-error *ngIf="eleveForm.controls.annee.touched && eleveForm.controls.annee.invalid">
+                        <span *ngIf="eleveForm.controls.annee.errors.required">This field is mandatory</span>
+                        <span *ngIf="eleveForm.controls.annee.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
                 
                 <mat-radio-group formControlName="sexe" color="primary">
                     <mat-radio-button value="HOMME">HOMME</mat-radio-button>
@@ -101,6 +110,7 @@
                 </mat-radio-group>
                 
             </div>
+
 
 
         </div>

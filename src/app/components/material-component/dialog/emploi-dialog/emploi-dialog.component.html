@@ -1,1 +1,120 @@
-<p>emploi-dialog works!</p>
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction}} Emploi</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="emploiForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>numero</mat-label>
+                    <input matInput formControlName="numero" required readonly>
+                    <mat-error *ngIf="emploiForm.controls.numero.touched && emploiForm.controls.numero.invalid">
+                        <span *ngIf="emploiForm.controls.numero.errors.required">This field is mandatory</span>
+                        <span *ngIf="emploiForm.controls.numero.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>annee</mat-label>
+                    <input matInput formControlName="annee" required readonly>
+                    <mat-error *ngIf="emploiForm.controls.annee.touched && emploiForm.controls.annee.invalid">
+                        <span *ngIf="emploiForm.controls.annee.errors.required">This field is mandatory</span>
+                        <span *ngIf="emploiForm.controls.annee.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>anneScolaire</mat-label>
+                    <mat-select formControlName="anneScolaireId" > 
+                        <mat-option *ngFor="let anneScolaire of anneScolaires" [value]="anneScolaire.id">
+                            {{anneScolaire.annee}} 
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>classe</mat-label>
+                    <mat-select formControlName="classeId" > 
+                        <mat-option *ngFor="let classe of classes" [value]="classe.id" >
+                            {{classe.libelle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div formArrayName="lemplois" *ngIf="emploiForm.get('lemplois')">
+                <mat-card *ngFor="let item of getLemplois.controls;let i=index" [formGroupName]="i" class="mat-elevation-z8">
+                    <mat-card-content>
+                        <!-- <h1>Emploi - {{i+1}}</h1> -->
+                        <mat-form-field fxFlex appearance="fill">
+                            <mat-label>horaire</mat-label>
+                            <mat-select formControlName="horaireId" > 
+                                <mat-option *ngFor="let horaire of horaires" [value]="horaire.id" >
+                                    {{horaire.heure}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field fxFlex appearance="fill" style="z-index: 1000;">
+                            <mat-label>jour</mat-label>
+                            <!-- <input (keyup)="autochange(i)" matInput formControlName="jourId" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto>
+                                <mat-option [value]="item.id" *ngFor="let item of filteroptions | async">{{item.libelle}}</mat-option>
+                            </mat-autocomplete> -->
+                            <mat-select formControlName="jourId" > 
+                                <mat-option *ngFor="let jour of jours" [value]="jour.id" >
+                                    {{jour.libelle}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field fxFlex appearance="fill">
+                            <mat-label>enseignant</mat-label>
+                            <mat-select formControlName="enseignantId" > 
+                                <mat-option *ngFor="let enseignant of enseignants" [value]="enseignant.id" >
+                                    {{enseignant.nom}} {{enseignant.prenom}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-raised-button color="warn" (click)="removeEmploi(i)" style="margin-top: 1%;">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <!-- <mat-form-field class="mat-50">
+                            <mat-label>Coutry</mat-label>
+                            <input (keyup)="autochange(i)" matInput formControlName="country" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto>
+                                <mat-option [value]="item.code" *ngFor="let item of filteroptions | async">{{item.name}}</mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field> -->
+                        
+                    </mat-card-content>
+                </mat-card>
+                
+            </div>
+            <a (click)="addlemplois()" mat-raised-button color="primary"> Ajout Emploi</a>
+
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(emploiForm.valid && emploiForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+
+
+
+
+
+

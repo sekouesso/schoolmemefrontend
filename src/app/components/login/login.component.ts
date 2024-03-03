@@ -53,7 +53,8 @@ export class LoginComponent {
         {
           next: (data: any) => {
             this.parent = data;
-            console.log(data);
+            window.localStorage.setItem('user', JSON.stringify(this.parent));
+            // console.log(data);
             
           },
           error: (error: any) => {

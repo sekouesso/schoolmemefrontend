@@ -1,1 +1,151 @@
-<p>note-dialog works!</p>
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction}} Note</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography" >
+    <form [formGroup]="noteForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>numero</mat-label>
+                    <input matInput formControlName="numero" required readonly>
+                    <mat-error *ngIf="noteForm.controls.numero.touched && noteForm.controls.numero.invalid">
+                        <span *ngIf="noteForm.controls.numero.errors.required">This field is mandatory</span>
+                        <span *ngIf="noteForm.controls.numero.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>annee</mat-label>
+                    <input matInput formControlName="annee" required readonly>
+                    <mat-error *ngIf="noteForm.controls.annee.touched && noteForm.controls.annee.invalid">
+                        <span *ngIf="noteForm.controls.annee.errors.required">This field is mandatory</span>
+                        <span *ngIf="noteForm.controls.annee.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>evaluation</mat-label>
+                    <mat-select formControlName="evaluationId" > 
+                        <mat-option *ngFor="let evaluation of evaluations" [value]="evaluation.id">
+                            {{evaluation.typeNote.libelle}} 
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>anneScolaire</mat-label>
+                    <mat-select formControlName="anneScolaireId" > 
+                        <mat-option *ngFor="let anneScolaire of anneScolaires" [value]="anneScolaire.id">
+                            {{anneScolaire.annee}} 
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+
+            <div fxLayout="row wrap">
+               
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>classe</mat-label>
+                    <mat-select formControlName="classeId" (valueChange)="onSelectedClasse($event)"> 
+                        <mat-option *ngFor="let classe of classes" [value]="classe.id" >
+                            {{classe.libelle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="fill" style="margin-left: 7px;">
+                    <mat-label>trimestre</mat-label>
+                    <mat-select formControlName="semestre" > 
+                        <mat-option *ngFor="let trimestre of trimestres" [value]="trimestre" >
+                            {{trimestre}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="noteForm.controls.semestre.touched && noteForm.controls.semestre.invalid">
+                        <span *ngIf="noteForm.controls.semestre.errors.required">This field is mandatory</span>
+                        <span *ngIf="noteForm.controls.semestre.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>enseignant</mat-label>
+                    <mat-select formControlName="enseignantId" (valueChange)="onSelectedMatiere($event)"> 
+                        <mat-option *ngFor="let enseignant of enseignants" [value]="enseignant.id">
+                            {{enseignant.nom}} {{enseignant.prenom}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>coefficient</mat-label>
+                    <input matInput formControlName="coefficient" required readonly>
+                    <mat-error *ngIf="noteForm.controls.coefficient.touched && noteForm.controls.coefficient.invalid">
+                        <span *ngIf="noteForm.controls.coefficient.errors.required">This field is mandatory</span>
+                        <span *ngIf="noteForm.controls.coefficient.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+                
+                
+            </div>
+            @if (eleves || noteForm.controls.lnotesDtos) {
+                <div fxLayout="row wrap">
+               <table class="table table-bordered table-responsive table-hover table-striped"  formArrayName="lnotesDtos">
+
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <td>Eleve</td>
+                        <td>Note</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of getLnotesDtos.controls;let i=index" [formGroupName]="i">
+                        
+                        <td style="width: 100%;">
+                            <mat-form-field fxFlex appearance="fill">
+                            <mat-select  formControlName="eleveId" required >
+                                <mat-option *ngFor="let item of eleves" [value]="item.id" readonly>
+                                    {{item.nom}} {{item.prenom}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        </td>
+                        <td style="width: 100%;">
+                            <input matInput class="form-control" formControlName="moy"/>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+            }
+            
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(noteForm.valid && noteForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+
+
+
+
+
+
+

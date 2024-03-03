@@ -57,6 +57,8 @@ import { CoursDialogComponent } from './dialog/cours-dialog/cours-dialog.compone
 import { TypenoteComponent } from './typenote/typenote.component';
 import { CycleComponent } from './cycle/cycle.component';
 import { NiveauComponent } from './niveau/niveau.component';
+import { SharedModule } from '../../shared/shared/shared.module';
+import { QuillModule } from 'ngx-quill';
 
 
 @NgModule({
@@ -121,7 +123,9 @@ import { NiveauComponent } from './niveau/niveau.component';
     ReactiveFormsModule,
     FlexLayoutModule,
     CdkTableModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule,
+    QuillModule.forRoot()
   ]
 })
 export class MaterialComponentModule { }

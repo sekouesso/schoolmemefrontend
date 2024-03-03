@@ -43,7 +43,9 @@ export class EleveComponent {
       this.ngxService.stop();
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator=this.paginator;
-      this.dataSource.sort = this.sort
+      this.dataSource.sort = this.sort;
+      console.log(response);
+      
     },
     error:(error:any)=>{
       this.ngxService.stop();

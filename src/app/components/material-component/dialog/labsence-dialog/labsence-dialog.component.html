@@ -1,1 +1,52 @@
-<p>labsence-dialog works!</p>
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction}} Ligne Absence</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="labsenceForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <div fxLayout="row wrap">
+                    <mat-form-field fxFlex appearance="fill">
+                        <mat-label>eleve</mat-label>
+                        <mat-select formControlName="eleveId" readonly>
+                            <mat-option *ngFor="let eleve of eleves" [value]="eleve.id">
+                                {{eleve.nom}} {{eleve.prenom}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>statut</mat-label>
+                    <input matInput formControlName="statut" required>
+                    <mat-error *ngIf="labsenceForm.controls.statut.touched && labsenceForm.controls.statut.invalid">
+                        <span *ngIf="labsenceForm.controls.statut.errors.required">This field is mandatory</span>
+                        <span *ngIf="labsenceForm.controls.statut.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+           
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(labsenceForm.valid && labsenceForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+
+
+
+
+

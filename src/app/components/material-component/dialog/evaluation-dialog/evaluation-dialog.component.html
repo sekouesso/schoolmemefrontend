@@ -82,11 +82,15 @@
 
                 <mat-form-field fxFlex appearance="fill">
                     <mat-label>trimestre</mat-label>
-                    <mat-select formControlName="trimestre" > 
-                        <mat-option *ngFor="let trimestre of trimestres" [value]="trimestre.id">
-                            {{trimestre.name}}
-                        </mat-option>
-                    </mat-select>
+                        @if (dialogAction==="Add") {
+                            <mat-select formControlName="trimestre" > 
+                            <mat-option *ngFor="let trimestre of trimestres" [value]="trimestre.id" >
+                                {{trimestre.name}}
+                            </mat-option>
+                        </mat-select>
+                        }@else{
+                            <input matInput formControlName="trimestre" required > 
+                        }
                     <mat-error *ngIf="evaluationForm.controls.trimestre.touched && evaluationForm.controls.trimestre.invalid">
                         <span *ngIf="evaluationForm.controls.trimestre.errors.required">This field is mandatory</span>
                         <span *ngIf="evaluationForm.controls.trimestre.errors.pattern">This field is invalid.</span>
