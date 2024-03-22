@@ -43,6 +43,7 @@ export class AuthService {
     this.username = undefined;
     this.roles = undefined;
     window.localStorage.removeItem("token");
+    window.localStorage.removeItem("user");
     this.router.navigate(['/']);
   }
 
@@ -55,8 +56,60 @@ export class AuthService {
     }
   }
 
+  public isAuth():boolean {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.logout();
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   public findByEmail(){
     return this.http.get(`${this.baseUrl}/findByEmail/${this.username}`)
 }
+
+public isAdmin(){
+    if (this.roles && this.roles==="ROLE_ADMIN") {
+      return true;
+    }else{
+      return false;
+    }
+}
+
+public isSurveillant(){
+  if (this.roles && this.roles==="ROLE_SURVEILLANT") {
+    return true;
+  }else{
+    return false;
+  }
+}
+
+public isParent(){
+  if (this.roles && this.roles==="ROLE_PARENT") {
+    return true;
+  }else{
+    return false;
+  }
+}
+
+public isEconome(){
+  if (this.roles && this.roles==="ROLE_ECONOME") {
+    return true;
+  }else{
+    return false;
+  }
+}
+
+public isEnseignant(){
+  if (this.roles && this.roles==="ROLE_ENSEIGNANT") {
+    return true;
+  }else{
+    return false;
+  }
+}
+
+
 
 }

@@ -99,7 +99,7 @@ export class NoteComponent {
   handleDeleteAction(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      message:'delete'+values.numero+' emploi',
+      message:'delete'+values.numero+' note',
       confirmation: true,
     };
     const dialogRef = this.dialog.open(ConfirmationDialogComponent,dialogConfig);

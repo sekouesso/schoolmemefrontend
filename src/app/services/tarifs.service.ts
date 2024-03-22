@@ -26,6 +26,13 @@ export class TarifsService {
       headers:new HttpHeaders().set("Content-Type","Application/json")
     });
   }
+
+  getEcolage(cycleId : any, anneScolaireId : any) {
+    return this.httpClient.get(`${this.url}/getEcolage/${cycleId}/${anneScolaireId}`,{
+      headers:new HttpHeaders().set("Content-Type","Application/json")
+    });
+  }
+
   getNumero() {
     return this.httpClient.get(`${this.url}/getcode`,{
       headers:new HttpHeaders().set("Content-Type","Application/json")

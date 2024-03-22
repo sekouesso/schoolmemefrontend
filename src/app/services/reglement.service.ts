@@ -39,4 +39,12 @@ export class ReglementService {
   getById(id:any){
     return this.http.get(this.url+'/getById/'+id);
   }
+
+  getAllByEleveIdAndAnneScolaireId(eleveId:any,anneScolaireId:any){
+    return this.http.get(this.url+'/getAllByEleveIdAndAnneScolaireId/'+eleveId+'/'+anneScolaireId);
+  }
+
+  getAllByEleveId(eleveId:any){
+    return this.http.get(this.url+'/getAllByEleveId/'+eleveId);
+  }
 }

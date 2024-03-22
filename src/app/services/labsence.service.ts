@@ -24,11 +24,19 @@ export class LabsenceService {
     return this.http.get(this.url+'/getById/'+id);
   }
 
+  getAbsenceEleve(eleveId:any){
+    return this.http.get(this.url+'/getAbsenceEleve/'+eleveId);
+  }
+
   getAllByNumero(numero:any){
     return this.http.get(this.url+'/getAllByNumero/'+numero);
   }
+
+  getAllEleveAbsentCours(numero:any){
+    return this.http.get(this.url+'/getAllByNumeroStatutFalse/'+numero);
+  }
   
   findAllByEleveAndDate(eleveId:any, date1:any, date2:any){
-    return this.http.get(this.url+'/getAllByNumero/'+eleveId+'/'+date1+'/'+date2);
+    return this.http.get(this.url+'/findAllByEleveAndDate/'+eleveId+'/'+date1+'/'+date2);
   }
 }

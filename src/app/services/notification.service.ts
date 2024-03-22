@@ -12,6 +12,24 @@ export class NotificationService {
     private http: HttpClient
   ) { }
 
+  getNumero(ann:any) {
+    return this.http.get(`${this.url}/getnumero/${ann}`,{
+      headers:new HttpHeaders().set("Content-Type","Application/json")
+    });
+  }
+
+  findAllByEleveId(eleveId:any) {
+    return this.http.get(`${this.url}/findAllByEleveId/${eleveId}`,{
+      headers:new HttpHeaders().set("Content-Type","Application/json")
+    });
+  }
+
+  findAllByEleveIdAndCreatedAt(eleveId:any,createdAt:any) {
+    return this.http.get(`${this.url}/findAllByEleveIdAndCreatedAt/${eleveId}/${createdAt}`,{
+      headers:new HttpHeaders().set("Content-Type","Application/json")
+    });
+  }
+
   add(data:any){
     return this.http.post(this.url+'/add',data,{
       headers:new HttpHeaders().set("Content-Type","Application/json")})

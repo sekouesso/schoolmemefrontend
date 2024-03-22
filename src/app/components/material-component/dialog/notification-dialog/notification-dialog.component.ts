@@ -18,7 +18,7 @@ export class NotificationDialogComponent {
   code: any;
   onAddNotification = new EventEmitter();
   onEditNotification = new EventEmitter();
-  eleveForm:any = FormGroup;
+  notificationForm:any = FormGroup;
   dialogAction:any = 'Add';
   action:any = 'Add';
   responseMessage:any ;
@@ -41,18 +41,19 @@ export class NotificationDialogComponent {
     private fb: FormBuilder
   ){}
 
-  get f() { return this.eleveForm.controls }
+  get f() { return this.notificationForm.controls }
 
  
 
   ngOnInit(): void {
     let p: any = localStorage.getItem('user')
     let parent:any = JSON.parse(p);
-    console.log(p, parent);
+    console.log(parent.id);
+    
     
       this.date = this.transformDate(new Date());
       this.annee = (this.date).toString().substring(0, 4);
-    this.eleveForm = this.fb.group({
+    this.notificationForm = this.fb.group({
       description: ['', [Validators.required]],
       numero: ['', [Validators.required]],
       annee: [this.annee, [Validators.required]],      
@@ -60,22 +61,33 @@ export class NotificationDialogComponent {
       eleveId: ['', [Validators.required]],
       parentId: [parent.id, [Validators.required]]
     });
-if(!this.dialogData.data){
-  this.eleveService.getNumero(this.annee).subscribe(
+    // console.log(this.notificationForm.value);
+    if(this.dialogData.data){
+        this.notificationForm.controls.eleveId.setValue(this.dialogData.data.id);
+    }
+    
+if(this.dialogData.action === 'Add'){
+  console.log("ok");
+  
+  this.notificationService.getNumero(this.annee).subscribe(
     response => {
       this.numero = response;
+      console.log(response);
+      
       if (this.numero == 0)
       {
         this.numero = (this.annee * 10000) +  1;
+        console.log(this.numero);
+        
       }
       else
       {
         this.numero =  this.numero + 1;
       }
           
-      this.eleveForm.controls.numero.setValue(this.numero);
+      this.notificationForm.controls.numero.setValue(this.numero);
     }
-  );
+    );
 }
     if(this.dialogData.action === 'Edit'){
       this.dialogAction = 'Edit';
@@ -89,7 +101,7 @@ if(!this.dialogData.data){
         eleveId: formData.eleve.id,
         parentId: formData.parent.id
       } 
-      this.eleveForm.patchValue(data);
+      this.notificationForm.patchValue(data);
     }
 
     this.getParents();
@@ -132,6 +144,8 @@ if(!this.dialogData.data){
   }
 
 handleSubmit(){
+  // console.log(this.notificationForm.value);
+  
   if(this.dialogAction === 'Edit'){
     this.edit();
   }else{
@@ -139,7 +153,7 @@ handleSubmit(){
   }
 }
 add(){
-  var formData = this.eleveForm.value;
+  var formData = this.notificationForm.value;
   var data = {
     numero: formData.numero,
     description: formData.description,
@@ -149,7 +163,7 @@ add(){
     parentId: formData.parentId
   }
   
-  this.eleveService.add(data).subscribe({
+  this.notificationService.add(data).subscribe({
     next: (response:any) => {
       this.dialogRef.close();
       this.onAddNotification.emit();
@@ -170,7 +184,7 @@ add(){
   })
 }
 edit(){
-  var formData = this.eleveForm.value;
+  var formData = this.notificationForm.value;
   var data = {
     id: this.dialogData.data.id,
     numero: formData.numero,
@@ -180,7 +194,7 @@ edit(){
     eleveId: formData.eleveId,
     parentId: formData.parentId
   }
-  this.eleveService.update(data).subscribe({
+  this.notificationService.update(data).subscribe({
     next: (response:any) => {
       this.dialogRef.close();
       this.onEditNotification.emit();

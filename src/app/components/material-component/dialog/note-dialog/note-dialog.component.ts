@@ -141,7 +141,7 @@ export class NoteDialogComponent {
     createlnotesDtosrow(eleveId:any) {
      return this.fb.group({    
         eleveId: [eleveId, [Validators.required]],
-        moy: ['', [Validators.required]]
+        moy: [0, [Validators.required,Validators.min(0),Validators.max(20)]]
       });
     }
     addlnotesDtos(eleveId:any)  {
@@ -234,8 +234,9 @@ if(!this.dialogData.data){
     if(this.dialogData.action === 'Edit'){
       this.dialogAction = 'Edit';
       this.action = 'Update';
+
       let formData = this.dialogData.data;
-    // console.log(formData);
+    console.log(formData);
     // console.log("Ok");
     
 // console.log(formData.lnotes.sort((a:any, b:any) => a.eleve.nom.trim().toLowerCase() - b.eleve.nom.trim().toLowerCase() ));
@@ -247,19 +248,42 @@ if(!this.dialogData.data){
         ep.moy = lp.moy;
         lempp.push(ep);
       })
-      this.noteForm.lnotesDtos=lempp
+      console.log(lempp);
+      
+      this.noteForm.lnotesDtos=lempp;
       if (formData.lnotes != null) {
         console.log(this.noteForm.lnotesDtos);
-        this.getElevesByClasseId(formData.classe.id);
-        lempp.forEach((eleve:any )=>{
-          console.log(eleve.eleveId);
-          this.addlnotesDtos(eleve.eleveId);
-          // this.addlnotesDtosupdate();
-          
-        })
+         this.getElevesByClasseId(formData.classe.id);
+
+        // this.eleveService.getAllByClasseId(formData.classe.id).subscribe({
+        //   next: (response: any) =>{
+        //     this.eleves = response;
+            
+        //      console.log(this.noteForm.value);
+        //      console.log(this.eleves);
+        //     console.log(this.noteForm.lnotesDtos,lempp);
+            
+           
+
+
+        //   },
+        //   error: (error: any) =>{
+        //     console.log(error);
+            
+        //   }
+        // });
+
+       
       }
       // console.log(formData);
       
+      lempp.forEach((eleve:any )=>{
+        console.log(eleve.eleveId);
+        this.addlnotesDtos(eleve.eleveId);
+        // this.addlnotesDtosupdate();
+        
+      });
+
       var data = {
         numero: formData.numero,
     annee: formData.annee,
@@ -271,6 +295,7 @@ if(!this.dialogData.data){
     classeId: formData.classe.id,
     lnotesDtos:lempp
       }
+      this.getClasseById(data.classeId);
       console.log(data);
       this.noteForm.setValue(data);
       
@@ -409,7 +434,8 @@ edit(){
     evaluationId: formData.evaluationId,
     anneScolaireId: formData.anneScolaireId,
     enseignantId: formData.enseignantId,
-    classeId: formData.classeId
+    classeId: formData.classeId,
+    lnotesDtos: formData.lnotesDtos,
   }
   this.noteService.update(data).subscribe({
     next: (response:any) => {
@@ -435,4 +461,6 @@ edit(){
   transformDate(date: any) {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
+
+  
 }

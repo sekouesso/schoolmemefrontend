@@ -39,4 +39,8 @@ export class EmploiService {
   getById(id:any){
     return this.http.get(this.url+'/getById/'+id);
   }
+
+  getByClasseIdAndAnneScolaireId(classeId:any,anneScolaireId:any){
+    return this.http.get(this.url+'/getByClasseIdAndAnneScolaireId/'+classeId+'/'+anneScolaireId);
+  }
 }

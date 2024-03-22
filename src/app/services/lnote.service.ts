@@ -33,4 +33,8 @@ export class LnoteService {
     return this.http.get(this.url+'/getAllNoteByEleve/'+eleveId);
   }
 
+  getNoteEleve(eleveId:any){
+    return this.http.get(this.url+'/getNoteEleve/'+eleveId);
+  }
+
 }

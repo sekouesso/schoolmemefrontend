@@ -13,7 +13,7 @@
                 <img src="assets/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">{{currentUser.nom}} {{currentUser.prenom}}</a>
             </div>
         </div>
 
@@ -47,7 +47,8 @@
                        
                     </ul>
                 </li> -->
-                <li class="nav-item {{setMenuClass('/cours','menu-open')}}"  id="cours" (click)="addClass('cours')" [ngClass]="{'menu-open': activeElement === 'cours'}">
+                <!-- id="cours" (click)="addClass('cours')" [ngClass]="{'menu-open': activeElement === 'cours'}" -->
+                <li class="nav-item {{setMenuClass('/cours','menu-open')}}" #cours (click)="addMenuOpen(cours)"  > 
                     <a  class="nav-link {{setMenuClass('/cours','active')}}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -90,7 +91,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{setMenuClass('/eleves','menu-open')}}" id="eleves" (click)="addClass('eleves')" [ngClass]="{'menu-open': activeElement === 'eleves'}">
+                <!-- id="eleves" (click)="addClass('eleves')" [ngClass]="{'menu-open': activeElement === 'eleves'}" -->
+                <li class="nav-item {{setMenuClass('/eleves','menu-open')}}"  #eleves (click)="addMenuOpen(eleves)">
                     <a  class="nav-link {{setMenuClass('/eleves','active')}}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -120,8 +122,8 @@
                       
                     </ul>
                 </li>
-
-                <li class="nav-item {{setMenuClass('/enseignant','menu-open')}}" id="enseignant" (click)="addClass('enseignant')" [ngClass]="{'menu-open': activeElement === 'enseignant'}">
+                <!-- id="enseignant" (click)="addClass('enseignant')" [ngClass]="{'menu-open': activeElement === 'enseignant'}" -->
+                <li class="nav-item {{setMenuClass('/enseignant','menu-open')}}" #enseignant (click)="addMenuOpen(enseignant)">
                     <a  class="nav-link {{setMenuClass('/enseignant','active')}}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -163,7 +165,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{setMenuClass('/parametre','menu-open')}}" id="parametre" (click)="addClass('parametre')" [ngClass]="{'menu-open': activeElement === 'parametre'}">
+                <!-- id="parametre" (click)="addClass('parametre')" [ngClass]="{'menu-open': activeElement === 'parametre'}" -->
+                <li class="nav-item {{setMenuClass('/parametre','menu-open')}}" #parametre (click)="addMenuOpen(parametre)">
                     <a  class="nav-link {{setMenuClass('/parametre','active')}}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -247,14 +250,17 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a  class="nav-link" routerLink="/school/utilisateur" routerLinkActive="active">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Utilisateurs
-                        </p>
-                    </a>
-                </li>
+                @if (authService.isEnseignant()) {
+                    <li class="nav-item">
+                        <a  class="nav-link" routerLink="/school/utilisateur" routerLinkActive="active">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Utilisateurs
+                            </p>
+                        </a>
+                    </li>
+                }
+               
             </ul>
         </nav>
 

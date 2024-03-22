@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SnackbarService } from '../../services/snackbar.service';
 import { UserService } from '../../services/user.service';
 import { GlobalConstants } from '../../shared/global-constants';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,7 +23,8 @@ export class ForgotPasswordComponent {
     private userService: UserService,
     private snackbarService: SnackbarService,
     private dialogRef:MatDialogRef<ForgotPasswordComponent>,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +46,21 @@ export class ForgotPasswordComponent {
       this.dialogRef.close();
       this.snackbarService.openSnackbar(this.responseMessage,"");
       //this.router.navigate(['/']);
+
+      const dialogConfig = new MatDialogConfig();
+      // dialogConfig.data = {
+      //   action:'Les règlements de '+values.nom+' '+values.prenom,
+      //   data: values
+      // };
+      dialogConfig.width = '700px';
+      // dialogConfig.disableClose = true;
+      const dialogRef = this.dialog.open(ResetPasswordComponent,dialogConfig);
+      this.router.events.subscribe(() => {
+        dialogRef.close();
+      });
+
+
+
     },error:(error)=>{
       this.ngxService.stop();
       if(error?.message){

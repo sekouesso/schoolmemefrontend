@@ -1,2 +1,90 @@
-<p>notification-dialog works!</p>
-<quill-editor></quill-editor>
+
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>{{ dialogAction}} Permission</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="notificationForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>numero</mat-label>
+                    <input matInput formControlName="numero" required readonly>
+                    <mat-error *ngIf="notificationForm.controls.numero.touched && notificationForm.controls.numero.invalid">
+                        <span *ngIf="notificationForm.controls.numero.errors.required">This field is mandatory</span>
+                        <span *ngIf="notificationForm.controls.numero.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>annee</mat-label>
+                    <input matInput formControlName="annee" required readonly>
+                    <mat-error *ngIf="notificationForm.controls.annee.touched && notificationForm.controls.annee.invalid">
+                        <span *ngIf="notificationForm.controls.annee.errors.required">This field is mandatory</span>
+                        <span *ngIf="notificationForm.controls.annee.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row wrap">
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>eleve</mat-label>
+                    <mat-select formControlName="eleveId" > 
+                        <mat-option *ngFor="let eleve of eleves" [value]="eleve.id">
+                            {{eleve.nom}} {{eleve.prenom}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                    <mat-label>parent</mat-label>
+                    <mat-select formControlName="parentId" > 
+                        <mat-option *ngFor="let parent of parents" [value]="parent.id" >
+                            {{parent.nom}} {{parent.prenom}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            
+                <mat-form-field fxFlex appearance="fill" style="width: 100% !important;" >
+                    <mat-label>libelle</mat-label>
+                    <input matInput formControlName="libelle" required >
+                    <mat-error *ngIf="notificationForm.controls.libelle.touched && notificationForm.controls.libelle.invalid">
+                        <span *ngIf="notificationForm.controls.libelle.errors.required">This field is mandatory</span>
+                        <span *ngIf="notificationForm.controls.libelle.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+                <div fxFlex style="margin: 10px;">
+                    <mat-label>Description</mat-label>
+                    <quill-editor [styles]="{height:'100px'}" matInput formControlName="description" theme="snow"></quill-editor>
+                    <mat-error *ngIf="notificationForm.controls.annee.touched && notificationForm.controls.annee.invalid">
+                        <span *ngIf="notificationForm.controls.annee.errors.required">This field is mandatory</span>
+                        <span *ngIf="notificationForm.controls.annee.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </div>
+           
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+        [disabled]="!(notificationForm.valid && notificationForm.dirty)">
+        <mat-icon>save</mat-icon> {{action}}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon>Close
+    </button>
+</mat-dialog-actions>
+
+
+
+
+
+

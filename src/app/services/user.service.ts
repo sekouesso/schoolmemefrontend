@@ -24,6 +24,12 @@ export class UserService {
     })
   }
 
+  resetPassword(data:any){
+    return this.httpClient.put(`${this.url}/resetPassword`,data,{
+      headers:new HttpHeaders().set("Content-Type","Application/json")
+    })
+  }
+
   login(data:any){
     return this.httpClient.post(this.url+"/login",data,{
       headers:new HttpHeaders().set("Content-Type","Application/json")

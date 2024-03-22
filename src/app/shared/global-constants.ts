@@ -11,6 +11,10 @@ export class GlobalConstants{
 
 
 
+    //Note
+    
+
+
     //regex
     public static nomRegex:string = "[a-zA-Z0-9]*";
     public static prenomRegex:string = "[a-zA-Z0-9]*";

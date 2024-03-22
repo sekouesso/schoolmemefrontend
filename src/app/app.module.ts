@@ -28,6 +28,7 @@ import { MenuopenDirective } from './menuopen.directive';
 import { DatePipe } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 import { SharedModule } from './shared/shared/shared.module';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -70,6 +71,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig ={
     EleveComponent,
     EvaluationComponent,
     MenuopenDirective,
+    ResetPasswordComponent,
    
   ],
   imports: [

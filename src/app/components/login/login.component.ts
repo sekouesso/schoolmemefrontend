@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -27,6 +27,7 @@ export class LoginComponent {
     private ngxService: NgxUiLoaderService,
     private dialog:MatDialog,
     private dialogRef:MatDialogRef<LoginComponent>,
+    @Inject(MAT_DIALOG_DATA) public dialogData:any
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +35,9 @@ export class LoginComponent {
       email:[null,[Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
       password:[null,[Validators.required]],
     });
+    if (this.dialogData) {
+      this.loginForm.controls.email.setValue(this.dialogData.data);
+    }
   }
 
   handleSubmit(){
@@ -81,6 +85,7 @@ export class LoginComponent {
   handleForgotPasswordAction(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
+    dialogConfig.disableClose = true;
     this.dialog.open(ForgotPasswordComponent,dialogConfig);
   }
 }

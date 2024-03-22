@@ -25,6 +25,7 @@ export class HeaderComponent {
   handleLoginAction(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
+    dialogConfig.disableClose = true;
     this.dialog.open(LoginComponent,dialogConfig);
   }
 
@@ -49,6 +50,7 @@ export class HeaderComponent {
   changePassword(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
+    dialogConfig.disableClose = true;
     this.dialog.open(ChangePasswordComponent,dialogConfig);
   }
 
@@ -56,12 +58,14 @@ export class HeaderComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '650px';
     dialogConfig.height = '80vh';
+    dialogConfig.disableClose = true;
     this.dialog.open(SignupComponent,dialogConfig);
   }
 
   handleForgotPasswordAction(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
+    dialogConfig.disableClose = true;
     this.dialog.open(ForgotPasswordComponent,dialogConfig);
   }
 

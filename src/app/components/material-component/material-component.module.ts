@@ -59,6 +59,11 @@ import { CycleComponent } from './cycle/cycle.component';
 import { NiveauComponent } from './niveau/niveau.component';
 import { SharedModule } from '../../shared/shared/shared.module';
 import { QuillModule } from 'ngx-quill';
+import { EmlpoiEleveDialogComponent } from './dialog/emlpoi-eleve-dialog/emlpoi-eleve-dialog.component';
+import { NoteEleveDialogComponent } from './dialog/note-eleve-dialog/note-eleve-dialog.component';
+import { ReglementEleveDialogComponent } from './dialog/reglement-eleve-dialog/reglement-eleve-dialog.component';
+import { AbsenceEleveDialogComponent } from './dialog/absence-eleve-dialog/absence-eleve-dialog.component';
+import { PermissionEleveDialogComponent } from './dialog/permission-eleve-dialog/permission-eleve-dialog.component';
 
 
 @NgModule({
@@ -113,7 +118,12 @@ import { QuillModule } from 'ngx-quill';
     CoursDialogComponent,
     TypenoteComponent,
     CycleComponent,
-    NiveauComponent
+    NiveauComponent,
+    EmlpoiEleveDialogComponent,
+    NoteEleveDialogComponent,
+    ReglementEleveDialogComponent,
+    AbsenceEleveDialogComponent,
+    PermissionEleveDialogComponent
   ],
   imports: [
     CommonModule,

@@ -1,3 +1,6 @@
 .image{
-  object-fit: cover !important;
+  object-fit: center/cover !important;
+  min-height: 100vh !important;
+ min-width: 100vw !important;
 }
+

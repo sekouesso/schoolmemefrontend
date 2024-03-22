@@ -14,6 +14,7 @@ import { CycleService } from '../../../../services/cycle.service';
   styleUrl: './tarifs-dialog.component.scss'
 })
 export class TarifsDialogComponent {
+
   num: any;
   code: any;
   onAddTarifs = new EventEmitter();
@@ -40,7 +41,15 @@ export class TarifsDialogComponent {
 
   get f() { return this.tarifForm.controls }
 
- 
+  selectFrais(value: any) {
+    // console.log(value.value);
+    let fraisTotal = value.value;
+    if(fraisTotal!==""){
+      this.tarifForm.controls.montant1.setValue(0.5*parseFloat(fraisTotal));
+      this.tarifForm.controls.montant2.setValue(0.3*parseFloat(fraisTotal));
+      this.tarifForm.controls.montant3.setValue(0.2*parseFloat(fraisTotal));
+    }
+    }
 
   ngOnInit(): void {
       this.date = this.transformDate(new Date());

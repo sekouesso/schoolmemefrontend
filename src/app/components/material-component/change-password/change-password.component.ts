@@ -50,8 +50,7 @@ export class ChangePasswordComponent {
     var formData = this.changePasswordForm.value;
     var data = {
       oldPassword:formData.oldPassword,
-      newPassword:formData.newPassword,
-      confirmPassword:formData.confirmPassword
+      newPassword:formData.newPassword
     }
     this.userService.changePassword(data).subscribe({
       next:(response:any)=>{
@@ -59,7 +58,7 @@ export class ChangePasswordComponent {
       this.responseMessage = response?.message;
       this.dialogRef.close();
       this.snackbarService.openSnackbar(this.responseMessage,'success')
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/school/dashboard']);
     },error:(error:any)=>{
       console.log(error);
       

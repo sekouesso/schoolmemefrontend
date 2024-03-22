@@ -3,6 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../services/snackbar.service';
+import { GlobalConstants } from '../shared/global-constants';
 
 // export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 //   const authService = inject(AuthService);
@@ -26,9 +28,10 @@ import { Router } from '@angular/router';
 export class TokenInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authService = inject(AuthService);
+    const snackbarService = inject(SnackbarService);
     const router = inject(Router);
       if(!req.url.includes("/utilisateur/login")){
-        if(req.url.includes("/utilisateur/register")){
+        if(req.url.includes("/utilisateur/register") || req.url.includes("/utilisateur/forgotPassword")|| req.url.includes("/utilisateur/resetPassword")){
           return next.handle(req);
         }
         let token = localStorage.getItem("token");
@@ -42,6 +45,7 @@ export class TokenInterceptor implements HttpInterceptor {
             //console.log(error.status);
             
             if(error.status ==401 || error.status === 403){
+              snackbarService.openSnackbar("Please Login to continue",GlobalConstants.error);
               authService.logout();
              // router.navigateByUrl('/');
             }

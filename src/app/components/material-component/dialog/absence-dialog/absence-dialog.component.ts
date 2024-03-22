@@ -200,6 +200,7 @@ if(!this.dialogData.data){
       
       this.eleves = el;
       //this.getElevesByClasseId(formData.classe.id)
+      this.getClasseById(formData.classe.id);
       console.log(this.eleves);
       this.dataSource = new MatTableDataSource(this.eleves);
       this.absenceForm.patchValue(data);

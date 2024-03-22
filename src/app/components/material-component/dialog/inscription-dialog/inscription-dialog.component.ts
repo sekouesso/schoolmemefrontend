@@ -56,8 +56,7 @@ export class InscriptionDialogComponent {
       annee: [this.annee, [Validators.required]],
       numero:[null,[Validators.required]],
       montant:[null,[Validators.required]],
-      dateInscription: ['', [Validators.required]],
-      lieunaissance: ['', [Validators.required]],      
+      dateInscription: ['', [Validators.required]],      
       anneScolaireId: ['', [Validators.required]],
       classeId: ['', [Validators.required]],
       eleveId: ['', [Validators.required]]

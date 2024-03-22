@@ -20,6 +20,7 @@ export class HomeComponent {
   handleLoginAction(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
+    dialogConfig.disableClose = true;
     this.dialog.open(LoginComponent,dialogConfig);
   }
 
