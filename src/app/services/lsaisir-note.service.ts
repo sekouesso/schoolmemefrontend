@@ -5,23 +5,14 @@ import { environment } from '../../environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
-export class EnseignantService {
-  url = environment.apiUrl+"/api/enseignant";
+export class LsaisirNoteService {
+
+  url = environment.apiUrl+"/api/lsaisirnote";
   constructor(
     private http: HttpClient
   ) { }
 
-  add(data:any){
-    return this.http.post(this.url+'/add',data,{
-      headers:new HttpHeaders().set("Content-Type","Application/json")})
-  }
-
-  update(data:any){
-    return this.http.put(this.url+'/update',data,{
-      headers:new HttpHeaders().set("Content-Type","Application/json")})
-  }
-
-  getAllEnseignant(){
+  getAll(){
     return this.http.get(this.url+'/getAll');
   }
 
@@ -34,8 +25,16 @@ export class EnseignantService {
     return this.http.get(this.url+'/getById/'+id);
   }
 
-  findEnseignantByTelephone(telephone:any){
-    return this.http.get(this.url+'/findEnseignantByTelephone/'+telephone);
+  getAllByNumero(numero:any){
+    return this.http.get(this.url+'/getAllByNumero/'+numero);
+  }
+
+  getAllNoteByEleve(eleveId:any){
+    return this.http.get(this.url+'/getAllNoteByEleve/'+eleveId);
+  }
+
+  getNoteEleve(eleveId:any){
+    return this.http.get(this.url+'/getNoteEleve/'+eleveId);
   }
 
 }

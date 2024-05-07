@@ -41,13 +41,22 @@
               "src/styles.scss",
               "node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css",
               "node_modules/admin-lte/dist/css/adminlte.min.css",
-              "node_modules/admin-lte/plugins/summernote/summernote-bs4.min.css"
+              "node_modules/datatables.net-dt/css/dataTables.dataTables.css",
+              "node_modules/admin-lte/plugins/summernote/summernote-bs4.min.css",
+              "node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css",
+              "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css"
             ],
             "scripts": [
               "node_modules/admin-lte/plugins/jquery/jquery.min.js",
               "node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
               "node_modules/admin-lte/dist/js/adminlte.min.js",
-              "node_modules/admin-lte/plugins/summernote/summernote-bs4.min.js"
+              "node_modules/admin-lte/plugins/summernote/summernote-bs4.min.js",
+              "node_modules/datatables.net/js/dataTables.js",
+              "node_modules/jszip/dist/jszip.js",
+              "node_modules/datatables.net-buttons/js/dataTables.buttons.js",
+              "node_modules/datatables.net-buttons/js/buttons.colVis.js",
+              "node_modules/datatables.net-buttons/js/buttons.html5.js",
+              "node_modules/datatables.net-buttons/js/buttons.print.js"
             ]
           },
           "configurations": {

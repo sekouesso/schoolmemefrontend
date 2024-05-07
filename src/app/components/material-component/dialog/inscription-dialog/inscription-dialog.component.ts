@@ -10,6 +10,7 @@ import { GlobalConstants } from '../../../../shared/global-constants';
 import { EleveDialogComponent } from '../eleve-dialog/eleve-dialog.component';
 import { AnneScolaireService } from '../../../../services/anne-scolaire.service';
 import { InscriptionService } from '../../../../services/inscription.service';
+import { TarifsService } from '../../../../services/tarifs.service';
 
 @Component({
   selector: 'app-inscription-dialog',
@@ -17,6 +18,7 @@ import { InscriptionService } from '../../../../services/inscription.service';
   styleUrl: './inscription-dialog.component.scss'
 })
 export class InscriptionDialogComponent {
+
 
   num: any;
   code: any;
@@ -32,6 +34,9 @@ export class InscriptionDialogComponent {
   numero: any;
   classes: any;
   eleves: any;
+  niveauId: any;
+  anneScoId: any;
+  fraisInscription: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData:any,
@@ -39,6 +44,7 @@ export class InscriptionDialogComponent {
     private anneScolaireService:AnneScolaireService,
     private classeService:ClasseService,
     private inscriptionService:InscriptionService,
+    private tarifsService:TarifsService,
     public dialogRef: MatDialogRef<InscriptionDialogComponent>,
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
@@ -47,7 +53,46 @@ export class InscriptionDialogComponent {
 
   get f() { return this.inscriptionForm.controls }
 
- 
+  selectedAnnee(anneeId: any) {
+    this.anneScoId = anneeId;
+    console.log(anneeId);
+    
+    }
+    selectedNiveau(eleveId: any) {
+      console.log(eleveId);
+      
+      this.eleveService.getById(eleveId).subscribe({
+        next:(response:any) => {
+          this.niveauId = response.classe.niveau.id;
+          this.tarifsService.getFraisInscription(this.niveauId,this.anneScoId).subscribe({
+            next:(response:any) => {
+              this.fraisInscription = response;
+              this.inscriptionForm.controls.montant.setValue(this.fraisInscription);
+            },
+            error:(error:any) => {
+              console.log(error);
+              if(error.error?.message){
+                this.responseMessage = error.error?.message;
+              }else {
+                this.responseMessage = GlobalConstants.generisError;
+              }
+              this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+              
+            }
+          })
+        },
+        error:(error:any) => {
+          console.log(error);
+          if(error.error?.message){
+            this.responseMessage = error.error?.message;
+          }else {
+            this.responseMessage = GlobalConstants.generisError;
+          }
+          this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+          
+        }
+      })
+    }
 
   ngOnInit(): void {
       this.date = this.transformDate(new Date());

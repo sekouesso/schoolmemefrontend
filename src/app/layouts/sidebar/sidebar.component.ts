@@ -18,6 +18,8 @@ export class SidebarComponent {
   ngOnInit() {
     let p: any = localStorage.getItem('user')
      this.currentUser = JSON.parse(p);
+     console.log(this.authService.isAdmin());
+     
     // this.authService.findByEmail().subscribe({
     //   next: (response)=>{
     //     this.currentUser=response;

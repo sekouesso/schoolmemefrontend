@@ -14,7 +14,7 @@
             <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                 <ng-container matColumnDef="libelle">
                     <th mat-sort-header mat-header-cell *matHeaderCellDef>Libelle</th>
-                    <td mat-cell *matCellDef="let element">{{element.libelle}}</td>
+                    <td mat-cell *matCellDef="let element">{{element.libelle|uppercase}}</td>
                 </ng-container>
         
                 <ng-container matColumnDef="edit">

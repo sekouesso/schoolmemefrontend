@@ -64,6 +64,10 @@ import { NoteEleveDialogComponent } from './dialog/note-eleve-dialog/note-eleve-
 import { ReglementEleveDialogComponent } from './dialog/reglement-eleve-dialog/reglement-eleve-dialog.component';
 import { AbsenceEleveDialogComponent } from './dialog/absence-eleve-dialog/absence-eleve-dialog.component';
 import { PermissionEleveDialogComponent } from './dialog/permission-eleve-dialog/permission-eleve-dialog.component';
+import { SaisirnoteComponent } from './saisirnote/saisirnote.component';
+import { SaisirNoteDialogComponent } from './dialog/saisir-note-dialog/saisir-note-dialog.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -123,7 +127,9 @@ import { PermissionEleveDialogComponent } from './dialog/permission-eleve-dialog
     NoteEleveDialogComponent,
     ReglementEleveDialogComponent,
     AbsenceEleveDialogComponent,
-    PermissionEleveDialogComponent
+    PermissionEleveDialogComponent,
+    SaisirnoteComponent,
+    SaisirNoteDialogComponent
   ],
   imports: [
     CommonModule,
@@ -135,6 +141,8 @@ import { PermissionEleveDialogComponent } from './dialog/permission-eleve-dialog
     CdkTableModule,
     MaterialModule,
     SharedModule,
+    NgSelectModule,
+    DataTablesModule,
     QuillModule.forRoot()
   ]
 })

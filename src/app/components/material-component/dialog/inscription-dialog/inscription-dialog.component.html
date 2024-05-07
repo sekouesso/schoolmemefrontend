@@ -53,7 +53,7 @@
             <div fxLayout="row wrap">
                 <mat-form-field fxFlex appearance="fill">
                     <mat-label>anneScolaire</mat-label>
-                    <mat-select formControlName="anneScolaireId" > 
+                    <mat-select formControlName="anneScolaireId" (valueChange)="selectedAnnee($event)" > 
                         <mat-option *ngFor="let anneScolaire of anneScolaires" [value]="anneScolaire.id">
                             {{anneScolaire.annee}} 
                         </mat-option>
@@ -65,7 +65,7 @@
                 
                 <mat-form-field fxFlex appearance="fill">
                     <mat-label>eleve</mat-label>
-                    <mat-select formControlName="eleveId" > 
+                    <mat-select formControlName="eleveId" (valueChange)="selectedNiveau($event)"> 
                         <mat-option *ngFor="let eleve of eleves" [value]="eleve.id">
                             {{eleve.nom}} {{eleve.prenom}}
                         </mat-option>

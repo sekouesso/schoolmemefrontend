@@ -1,29 +1,32 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { AnneScolaireService } from '../../../../services/anne-scolaire.service';
 import { ClasseService } from '../../../../services/classe.service';
+import { CoefficientService } from '../../../../services/coefficient.service';
+import { EleveService } from '../../../../services/eleve.service';
 import { EnseignantService } from '../../../../services/enseignant.service';
 import { EvaluationService } from '../../../../services/evaluation.service';
+import { MatiereService } from '../../../../services/matiere.service';
 import { NoteService } from '../../../../services/note.service';
 import { SnackbarService } from '../../../../services/snackbar.service';
 import { GlobalConstants } from '../../../../shared/global-constants';
-import { MatTableDataSource } from '@angular/material/table';
-import { EleveService } from '../../../../services/eleve.service';
-import { CoefficientService } from '../../../../services/coefficient.service';
+import { NoteDialogComponent } from '../note-dialog/note-dialog.component';
+import { SaisirNoteService } from '../../../../services/saisir-note.service';
 
 @Component({
-  selector: 'app-note-dialog',
-  templateUrl: './note-dialog.component.html',
-  styleUrl: './note-dialog.component.scss'
+  selector: 'app-saisir-note-dialog',
+  templateUrl: './saisir-note-dialog.component.html',
+  styleUrl: './saisir-note-dialog.component.scss'
 })
-export class NoteDialogComponent {
+export class SaisirNoteDialogComponent {
   num: any;
   code: any;
-  onAddNote = new EventEmitter();
-  onEditNote = new EventEmitter();
-  noteForm:any = FormGroup;
+  onAddSaisirNote = new EventEmitter();
+  onEditSaisirNote = new EventEmitter();
+  saisirnoteForm:any = FormGroup;
   dialogAction:any = 'Add';
   action:any = 'Add';
   responseMessage:any ;
@@ -42,17 +45,19 @@ export class NoteDialogComponent {
   evaluations: any;
   dataSource: any;
   coefficient: any;
-  lnotes!: FormArray<any>;
+  lsaisirnotes!: FormArray<any>;
   enseignant: any;
   matiereId: any;
   editable: boolean = true;
+  matieres: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData:any,
     public enseignantService:EnseignantService,
     private anneScolaireService:AnneScolaireService,
     private classeService:ClasseService,
-    private noteService:NoteService,
+    private saisirnoteService:SaisirNoteService,
+    private matiereService:MatiereService,
     private eleveService:EleveService,
     private coefficientService:CoefficientService,
     private evaluationService:EvaluationService,
@@ -62,7 +67,7 @@ export class NoteDialogComponent {
     private fb: FormBuilder
   ){}
 
-  get f() { return this.noteForm.controls }
+  get f() { return this.saisirnoteForm.controls }
 
   onSelectedClasse(classeId: any) {
     this.getClasseById(classeId);
@@ -73,13 +78,13 @@ export class NoteDialogComponent {
         this.eleves = response;
         if (this.eleves != null) {
           this.eleves.forEach((eleve:any )=>{
-            this.addlnotesDtos(eleve.id);
+            this.addlsaisirNoteDtos(eleve.id);
           })
           // for (let i = 0; i < this.eleves.length; i++) {
-          //   this.addlnotesDtos();
+          //   this.addlsaisirNoteDtos();
           // }
         }
-         console.log(this.noteForm.value);
+         console.log(this.saisirnoteForm.value);
          console.log(this.eleves);
       },
       error: (error: any) =>{
@@ -97,9 +102,9 @@ export class NoteDialogComponent {
         next: (response: any) =>{
           this.enseignant = response;
           this.matiereId = response.matiere.id;
-          let classeId = this.noteForm.value.classeId;
+          let classeId = this.saisirnoteForm.value.classeId;
           console.log(classeId,this.matiereId);
-          this.geCoefficientByClasseIdAndMatiereId(classeId, this.matiereId); 
+          // this.geCoefficientByClasseIdAndMatiereId(classeId, this.matiereId); 
         },
         error: (error: any) =>{
           console.log(error);
@@ -118,50 +123,54 @@ export class NoteDialogComponent {
         }
       });
     }
+    
 
-    geCoefficientByClasseIdAndMatiereId (classeId: any,matiereId:any) {
-      this.coefficientService.getCoefficient(classeId,matiereId).subscribe({
-        next: (response: any) =>{
-          console.log(response);
+    // geCoefficientByClasseIdAndMatiereId (classeId: any,matiereId:any) {
+    //   this.coefficientService.getCoefficient(classeId,matiereId).subscribe({
+    //     next: (response: any) =>{
+    //       console.log(response);
           
-          this.coefficient = response;
-          this.noteForm.controls['coefficient'].setValue(this.coefficient);
-        },
-        error: (error: any) =>{
-          console.log(error);
+    //       this.coefficient = response;
+    //       this.saisirnoteForm.controls['coefficient'].setValue(this.coefficient);
+    //     },
+    //     error: (error: any) =>{
+    //       console.log(error);
           
-        }
-      });
-    }
+    //     }
+    //   });
+    // }
 
-    get getLnotesDtos() {
-      return this.noteForm.get("lnotesDtos") as FormArray;
+    get getlsaisirNoteDtos() {
+      return this.saisirnoteForm.get("lsaisirNoteDtos") as FormArray;
     }
   
-    createlnotesDtosrow(eleveId:any) {
+    createlsaisirNoteDtosrow(eleveId:any) {
      return this.fb.group({    
         eleveId: [eleveId, [Validators.required]],
-        moy: [0, [Validators.required,Validators.min(0),Validators.max(20)]]
+        interro: [0, [Validators.required,Validators.min(0),Validators.max(20)]],
+        devoir: [0, [Validators.required,Validators.min(0),Validators.max(20)]],
+        compos: [0, [Validators.required,Validators.min(0),Validators.max(20)]],
       });
     }
-    addlnotesDtos(eleveId:any)  {
-        this.lnotes = this.noteForm.controls.lnotesDtos as FormArray;
-        this.lnotes.push(this.createlnotesDtosrow(eleveId));
+    addlsaisirNoteDtos(eleveId:any)  {
+        this.lsaisirnotes = this.saisirnoteForm.controls.lsaisirNoteDtos as FormArray;
+        this.lsaisirnotes.push(this.createlsaisirNoteDtosrow(eleveId));
         
     }
 
-    addlnotesDtosupdate()  {
-      this.lnotes = this.noteForm.controls.lnotesDtos as FormArray;
-      this.lnotes.push(this.fb.group({    
-        eleveId: ['', [Validators.required]],
-        moy: ['', [Validators.required]]
-      }));
-      
-  }
+  //   addlsaisirNoteDtosupdate()  {
+  //     this.lsaisirNote = this.saisirnoteForm.controls.lsaisirNoteDtos as FormArray;
+  //     this.lsaisirNote.push(this.fb.group({    
+  //       eleveId: [eleveId, [Validators.required]],
+  //       interro: [0, [Validators.required,Validators.min(0),Validators.max(20)]],
+  //       devoir: [0, [Validators.required,Validators.min(0),Validators.max(20)]],
+  //       compos: [0, [Validators.required,Validators.min(0),Validators.max(20)]],
+  //     }));  
+  // }
   
-    removelnotesDtos(index: any) {
+    removelsaisirNoteDtos(index: any) {
       if (confirm('do you want to remove this note?')) {
-        const control = this.noteForm.controls.lnotesDtos as FormArray;
+        const control = this.saisirnoteForm.controls.lsaisirNoteDtos as FormArray;
         control.removeAt(index)
       }
     }
@@ -203,19 +212,17 @@ export class NoteDialogComponent {
   ngOnInit(): void {
       this.date = this.transformDate(new Date());
       this.annee = (this.date).toString().substring(0, 4);
-    this.noteForm = this.fb.group({
+    this.saisirnoteForm = this.fb.group({
       annee: [this.annee, [Validators.required]],
       numero:[null,[Validators.required]],
-      semestre:[null,[Validators.required]],
-      coefficient: ['', [Validators.required]],
-      enseignantId: ['', [Validators.required]],      
-      pourcentage: [0, [Validators.required]],
+      session:[null,[Validators.required]],
+      matiereId: ['', [Validators.required]],
+      enseignantId: ['', [Validators.required]],  
       classeId: ['', [Validators.required]],
-      evaluationId: ['', [Validators.required]],
-      lnotesDtos: this.fb.array([])
+      lsaisirNoteDtos: this.fb.array([])
     });
 if(!this.dialogData.data){
-  this.noteService.getNumero(this.annee).subscribe(
+  this.saisirnoteService.getNumero(this.annee).subscribe(
     response => {
       this.numero = response;
       if (this.numero == 0)
@@ -227,7 +234,7 @@ if(!this.dialogData.data){
         this.numero =  this.numero + 1;
       }
           
-      this.noteForm.controls.numero.setValue(this.numero);
+      this.saisirnoteForm.controls.numero.setValue(this.numero);
     }
   );
 }
@@ -239,29 +246,31 @@ if(!this.dialogData.data){
     console.log(formData);
     // console.log("Ok");
     
-// console.log(formData.lnotes.sort((a:any, b:any) => a.eleve.nom.trim().toLowerCase() - b.eleve.nom.trim().toLowerCase() ));
+// console.log(formData.lsaisirNote.sort((a:any, b:any) => a.eleve.nom.trim().toLowerCase() - b.eleve.nom.trim().toLowerCase() ));
 
       let lempp: any = [];
-      formData.lnotes.forEach((lp: any) =>{
+      formData.lsaisirNotes.forEach((lp: any) =>{
         let ep: any ={};
         ep.eleveId = lp.eleve.id;
-        ep.moy = lp.moy;
+        ep.interro = lp.interro;
+        ep.devoir = lp.devoir;
+        ep.compos = lp.compos;
         lempp.push(ep);
       })
       console.log(lempp);
       
-      this.noteForm.lnotesDtos=lempp;
-      if (formData.lnotes != null) {
-        console.log(this.noteForm.lnotesDtos);
+      this.saisirnoteForm.lsaisirNoteDtos=lempp;
+      if (formData.lsaisirNotes != null) {
+        console.log(this.saisirnoteForm.lsaisirNoteDtos);
          this.getElevesByClasseId(formData.classe.id);
 
         // this.eleveService.getAllByClasseId(formData.classe.id).subscribe({
         //   next: (response: any) =>{
         //     this.eleves = response;
             
-        //      console.log(this.noteForm.value);
+        //      console.log(this.saisirnoteForm.value);
         //      console.log(this.eleves);
-        //     console.log(this.noteForm.lnotesDtos,lempp);
+        //     console.log(this.saisirnoteForm.lsaisirNoteDtos,lempp);
             
            
 
@@ -279,40 +288,37 @@ if(!this.dialogData.data){
       
       lempp.forEach((eleve:any )=>{
         console.log(eleve.eleveId);
-        this.addlnotesDtos(eleve.eleveId);
-        // this.addlnotesDtosupdate();
+        this.addlsaisirNoteDtos(eleve.eleveId);
+        // this.addlsaisirNoteDtosupdate();
         
       });
 
       var data = {
         numero: formData.numero,
     annee: formData.annee,
-    coefficient: formData.coefficient,
-    semestre: formData.semestre,
-    evaluationId: formData.evaluation.id,
-    pourcentage: formData.pourcentage,
+    session: formData.session,
+    matiereId: formData.matiere.id,
     enseignantId: formData.enseignant.id,
     classeId: formData.classe.id,
-    lnotesDtos:lempp
+    lsaisirNoteDtos:lempp
       }
       this.getClasseById(data.classeId);
       console.log(data);
-      this.noteForm.setValue(data);
+      this.saisirnoteForm.setValue(data);
       
-      // this.noteForm.patchValue(data);
+      // this.saisirnoteForm.patchValue(data);
     }
 
     this.getEnseignants();
-    this.getEvaluations();
-    this.getAnneScolaires();
+    this.getMatieres();
     this.getClasses();
     
   }
 
-  getEvaluations() {
-    this.evaluationService.getAll().subscribe({
+  getMatieres() {
+    this.matiereService.getAllMatieres().subscribe({
       next:(response:any) => {
-        this.evaluations = response
+        this.matieres = response
       },
       error:(error:any) => {
         console.log(error);
@@ -344,23 +350,7 @@ if(!this.dialogData.data){
       }
     })
   }
-  getAnneScolaires() {
-    this.anneScolaireService.getAll().subscribe({
-      next:(response:any) => {
-        this.anneScolaires = response
-      },
-      error:(error:any) => {
-        console.log(error);
-        if(error.error?.message){
-          this.responseMessage = error.error?.message;
-        }else {
-          this.responseMessage = GlobalConstants.generisError;
-        }
-        this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
-        
-      }
-    })
-  }
+ 
   getClasses() {
     this.classeService.getAll().subscribe({
       next:(response:any) => {
@@ -381,7 +371,7 @@ if(!this.dialogData.data){
 
  
 handleSubmit(){
-  // console.log(this.noteForm.value);
+  // console.log(this.saisirnoteForm.value);
   
   if(this.dialogAction === 'Edit'){
     this.edit();
@@ -390,23 +380,21 @@ handleSubmit(){
   }
 }
 add(){
-  var formData = this.noteForm.value;
+  var formData = this.saisirnoteForm.value;
   var data = {
     numero: formData.numero,
     annee: formData.annee,
-    coefficient: formData.coefficient,
-    semestre: formData.semestre,
-    evaluationId: formData.evaluationId,
-    pourcentage: formData.pourcentage,
+    session: formData.session,
+    matiereId: formData.matiereId,
     enseignantId: formData.enseignantId,
     classeId: formData.classeId,
-    lnotesDtos: formData.lnotesDtos,
+    lsaisirNoteDtos: formData.lsaisirNoteDtos,
   };
   
-  this.noteService.add(data).subscribe({
+  this.saisirnoteService.add(data).subscribe({
     next: (response:any) => {
       this.dialogRef.close();
-      this.onAddNote.emit();
+      this.onAddSaisirNote.emit();
       this.responseMessage = response.message;
       this.snackbarService.openSnackbar(this.responseMessage,'success');
     },
@@ -424,23 +412,21 @@ add(){
   })
 }
 edit(){
-  var formData = this.noteForm.value;
+  var formData = this.saisirnoteForm.value;
   var data = {
     id: this.dialogData.data.id,
     numero: formData.numero,
     annee: formData.annee,
-    coefficient: formData.coefficient,
-    semestre: formData.semestre,
-    evaluationId: formData.evaluationId,
-    pourcentage: formData.pourcentage,
+    session: formData.session,
+    matiereId: formData.matiereId,
     enseignantId: formData.enseignantId,
     classeId: formData.classeId,
-    lnotesDtos: formData.lnotesDtos,
+    lsaisirNoteDtos: formData.lsaisirNoteDtos,
   }
-  this.noteService.update(data).subscribe({
+  this.saisirnoteService.update(data).subscribe({
     next: (response:any) => {
       this.dialogRef.close();
-      this.onEditNote.emit();
+      this.onEditSaisirNote.emit();
       this.responseMessage = response.message;
       this.snackbarService.openSnackbar(this.responseMessage,'success');
     },
@@ -462,5 +448,4 @@ edit(){
     return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
-  
 }

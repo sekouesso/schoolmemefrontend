@@ -32,10 +32,10 @@
             </div>
             <div fxLayout="row wrap">
                 <mat-form-field fxFlex appearance="fill">
-                    <mat-label>cycle</mat-label>
-                    <mat-select formControlName="cycleId">
-                        <mat-option *ngFor="let cycle of cycles" [value]="cycle.id">
-                            {{cycle.libelle}}
+                    <mat-label>Niveau</mat-label>
+                    <mat-select formControlName="niveauId">
+                        <mat-option *ngFor="let niveau of niveaux" [value]="niveau.id">
+                            {{niveau.libelle}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

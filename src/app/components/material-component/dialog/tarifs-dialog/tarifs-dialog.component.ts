@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { GlobalConstants } from '../../../../shared/global-constants';
 import { AnneScolaireService } from '../../../../services/anne-scolaire.service';
 import { CycleService } from '../../../../services/cycle.service';
+import { NiveauService } from '../../../../services/niveau.service';
 
 @Component({
   selector: 'app-tarifs-dialog',
@@ -27,11 +28,13 @@ export class TarifsDialogComponent {
   annee: any;
   cycles: any;
   anneScolaires: any;
+  niveaux: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData:any,
     public tarifService:TarifsService,
     private cycleService:CycleService,
+    private niveauService:NiveauService,
     private anneScolaireService:AnneScolaireService,
     public dialogRef: MatDialogRef<TarifsDialogComponent>,
     private snackbarService: SnackbarService,
@@ -57,7 +60,7 @@ export class TarifsDialogComponent {
     this.tarifForm = this.fb.group({
       id: null,
       code: ['', [Validators.required]],
-      cycleId: ['', [Validators.required]],
+      niveauId: ['', [Validators.required]],
       anneScolaireId: ['', [Validators.required]],      
       annee: [this.annee, [Validators.required]],
       montant1: [0, [Validators.required]],
@@ -95,14 +98,15 @@ if(!this.dialogData.data){
         montant1: formData.montant1,
         montant2: formData.montant2,
         montant3: formData.montant3,
-        cycleId: formData.cycle.id,
+        niveauId: formData.niveau.id,
         anneScolaireId: formData.anneScolaire.id
       }
       
       this.tarifForm.patchValue(data);
     }
 
-    this.getCycles();
+    // this.getCycles();
+    this.getNiveaux();
     this.getAnneScolaires();
     
   }
@@ -141,6 +145,25 @@ if(!this.dialogData.data){
     })
   }
 
+  
+  getNiveaux() {
+    this.niveauService.getAll().subscribe({
+      next:(response:any) => {
+        this.niveaux = response
+      },
+      error:(error:any) => {
+        console.log(error);
+        if(error.error?.message){
+          this.responseMessage = error.error?.message;
+        }else {
+          this.responseMessage = GlobalConstants.generisError;
+        }
+        this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+        
+      }
+    })
+  }
+
 handleSubmit(){
   if(this.dialogAction === 'Edit'){
     this.edit();
@@ -162,7 +185,7 @@ add(){
     montant1: formData.montant1,
     montant2: formData.montant2,
     montant3: formData.montant3,
-    cycleId: formData.cycleId,
+    niveauId: formData.niveauId,
     anneScolaireId: formData.anneScolaireId
   }
   this.tarifService.add(data).subscribe({
@@ -200,7 +223,7 @@ edit(){
     montant1: formData.montant1,
     montant2: formData.montant2,
     montant3: formData.montant3,
-    cycleId: formData.cycleId,
+    niveauId: formData.niveauId,
     anneScolaireId: formData.anneScolaireId
   }
   this.tarifService.update(data).subscribe({

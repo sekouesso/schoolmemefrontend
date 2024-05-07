@@ -13,6 +13,7 @@ import { EleveService } from '../../../../services/eleve.service';
 import { LabsenceDialogComponent } from '../labsence-dialog/labsence-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { DashboardService } from '../../../../services/dashboard.service';
 
 @Component({
   selector: 'app-absence-dialog',
@@ -45,6 +46,10 @@ export class AbsenceDialogComponent {
 
   displayColumns: string[]=['matricule','nom','statut'];
   dataSource:any;
+  parentId: any;
+  telephone: any;
+  listClasseEnseignant: any;
+  enseignant: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData:any,
@@ -52,6 +57,7 @@ export class AbsenceDialogComponent {
     private anneScolaireService:AnneScolaireService,
     private classeService:ClasseService,
     private absenceService:AbsenceService,
+    private dashboardService: DashboardService,
     private horaireService:HoraireService,
     private eleveService: EleveService,
     public dialogRef: MatDialogRef<AbsenceDialogComponent>,
@@ -137,17 +143,60 @@ export class AbsenceDialogComponent {
      dialogConfig.data = { eleve};
      this.dialog.open(LabsenceDialogComponent, dialogConfig)//.afterClosed().subscribe(b10 => { });
    }
+   
+   getClasseEnseignant() {
+    this.enseignantService.findEnseignantByTelephone(this.telephone).subscribe({next:(data:any)=>{
+      this.ngxService.stop();
+      this.enseignant = data;
+      this.absenceForm.controls.enseignantId.setValue(this.enseignant.id);
+      this.dashboardService.getClasseEnseignant(data.id).subscribe({next:(response:any)=>{
+        this.ngxService.stop();
+        this.listClasseEnseignant = response;
+        console.log(response);
+        
+      },
+      error:(error:any)=>{
+        this.ngxService.stop();
+        console.log(error.error?.message);
+        if(error.error?.message){
+          this.responseMessage = error.error?.message;
+        }else {
+          this.responseMessage = GlobalConstants.generisError;
+        }
+        this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+      }
+    });
+      
+    },
+    error:(error:any)=>{
+      this.ngxService.stop();
+      console.log(error.error?.message);
+      if(error.error?.message){
+        this.responseMessage = error.error?.message;
+      }else {
+        this.responseMessage = GlobalConstants.generisError;
+      }
+      this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+    }
+  });
+  }
 
   ngOnInit(): void {
       this.date = this.transformDate(new Date());
       this.annee = (this.date).toString().substring(0, 4);
+
+      this.ngxService.start();
+    let p: any = window.localStorage.getItem('user');
+    let parent:any = JSON.parse(p);
+    this.parentId = parent.id;
+    this.telephone = parent.telephone;
+
     this.absenceForm = this.fb.group({
       annee: [this.annee, [Validators.required]],
       numero:[null,[Validators.required]],
       semestre:[null,[Validators.required]],
-      dateJour: ['', [Validators.required]],
-      enseignantId: ['', [Validators.required]],      
-      anneScolaireId: ['', [Validators.required]],
+      dateJour: [this.date, [Validators.required]],
+      enseignantId: ['', [Validators.required]],
       classeId: ['', [Validators.required]],
       horaireId: ['', [Validators.required]],
       labsences: []
@@ -166,6 +215,7 @@ if(!this.dialogData.data){
       }
           
       this.absenceForm.controls.numero.setValue(this.numero);
+      
     }
   );
 }
@@ -180,7 +230,6 @@ if(!this.dialogData.data){
         dateJour: formData.dateJour,
         annee: formData.annee,
         semestre: formData.semestre,
-        anneScolaireId: formData.anneScolaire.id,
         enseignantId: formData.enseignant.id,
         horaireId: formData.horaire.id,
         classeId: formData.classe.id,
@@ -211,6 +260,7 @@ if(!this.dialogData.data){
     this.getHoraires();
     this.getAnneScolaires();
     this.getClasses();
+    this.getClasseEnseignant();
     
   }
 
@@ -286,7 +336,6 @@ if(!this.dialogData.data){
 
  
 handleSubmit(){
-  
   if(this.dialogAction === 'Edit'){
     this.edit();
   }else{
@@ -295,7 +344,7 @@ handleSubmit(){
 }
 add(){
   this.getElevesByClasseId(this.absenceForm.value.classeId);
-  console.log(this.eleves);
+  // console.log(this.eleves);
   let datas:any = [];
   this.eleves.map((eleve:any) =>{
     let el:any = {};
@@ -303,7 +352,7 @@ add(){
       el["statut"] = eleve.statut;
       datas.push(el);
   });
-  console.log(datas);
+  // console.log(datas);
   this.absenceForm.controls.labsences.setValue(datas);
   // let formData = this.absenceForm.value;
   // console.log(formData);
@@ -317,7 +366,6 @@ add(){
     dateJour: formData.dateJour,
     annee: formData.annee,
     semestre: formData.semestre,
-    anneScolaireId: formData.anneScolaireId,
     enseignantId: formData.enseignantId,
     horaireId: formData.horaireId,
     classeId: formData.classeId,
@@ -368,7 +416,6 @@ edit(){
     dateJour: formData.dateJour,
     annee: formData.annee,
     semestre: formData.semestre,
-    anneScolaireId: formData.anneScolaireId,
     enseignantId: formData.enseignantId,
     horaireId: formData.horaireId,
     classeId: formData.classeId,

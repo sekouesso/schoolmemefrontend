@@ -1,15 +1,21 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EnseignantService {
-  url = environment.apiUrl+"/api/enseignant";
+export class SaisirNoteService {
+  url = environment.apiUrl+"/api/saisirnote";
   constructor(
     private http: HttpClient
   ) { }
+
+  getNumero(ann:any) {
+    return this.http.get(`${this.url}/getnumero/${ann}`,{
+      headers:new HttpHeaders().set("Content-Type","Application/json")
+    });
+  }
 
   add(data:any){
     return this.http.post(this.url+'/add',data,{
@@ -21,7 +27,7 @@ export class EnseignantService {
       headers:new HttpHeaders().set("Content-Type","Application/json")})
   }
 
-  getAllEnseignant(){
+  getAll(){
     return this.http.get(this.url+'/getAll');
   }
 
@@ -33,9 +39,4 @@ export class EnseignantService {
   getById(id:any){
     return this.http.get(this.url+'/getById/'+id);
   }
-
-  findEnseignantByTelephone(telephone:any){
-    return this.http.get(this.url+'/findEnseignantByTelephone/'+telephone);
-  }
-
 }

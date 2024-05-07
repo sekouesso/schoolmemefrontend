@@ -87,6 +87,7 @@ export class NotificationComponent {
         data:values
       };
       dialogConfig.width = '700px';
+      dialogConfig.disableClose = true;
       const dialogRef = this.dialog.open(NotificationDialogComponent,dialogConfig);
       this.router.events.subscribe(() => {
         dialogRef.close();
@@ -99,9 +100,11 @@ export class NotificationComponent {
       handleDeleteAction(values: any) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = {
-          message:'delete '+values.numero+' Evaluation',
+          message:'delete '+values.numero+' Notofication',
           confirmation: true,
         };
+        dialogConfig.disableClose = true;
+        dialogConfig.width = "500px"
         const dialogRef = this.dialog.open(ConfirmationDialogComponent,dialogConfig);
         const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response) => {
           this.ngxService.start();

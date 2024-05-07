@@ -19,6 +19,7 @@ export class TypenoteDialogComponent {
   dialogAction:any = 'Add';
   action:any = 'Add';
   responseMessage:any ;
+  types= ["interro","devoir","compos"];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData:any,

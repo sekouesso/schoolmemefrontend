@@ -29,6 +29,8 @@ import { DatePipe } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 import { SharedModule } from './shared/shared/shared.module';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { DataTablesModule } from 'angular-datatables';
 
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -86,7 +88,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig ={
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     QuillModule.forRoot(),
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
-    SharedModule
+    SharedModule,
+    DataTablesModule 
+    
   ],
   providers: [
     provideAnimationsAsync(),

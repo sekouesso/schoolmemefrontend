@@ -40,26 +40,6 @@
                   </mat-form-field>
 
                   <mat-form-field fxFlex appearance="fill">
-                    <mat-label>enseignant</mat-label>
-                    <mat-select formControlName="enseignantId" > 
-                        <mat-option *ngFor="let enseignant of enseignants" [value]="enseignant.id">
-                            {{enseignant.nom}} {{enseignant.prenom}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-            </div>
-
-            <div fxLayout="row wrap">
-                <mat-form-field fxFlex appearance="fill">
-                    <mat-label>anneScolaire</mat-label>
-                    <mat-select formControlName="anneScolaireId" > 
-                        <mat-option *ngFor="let anneScolaire of anneScolaires" [value]="anneScolaire.id">
-                            {{anneScolaire.annee}} 
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field fxFlex appearance="fill">
                     <mat-label>horaire</mat-label>
                     <mat-select formControlName="horaireId" > 
                         <mat-option *ngFor="let horaire of horaires" [value]="horaire.id">
@@ -67,15 +47,36 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+
             </div>
+
+            <!-- <div fxLayout="row wrap"> -->
+                <!-- <mat-form-field fxFlex appearance="fill">
+                    <mat-label>anneScolaire</mat-label>
+                    <mat-select formControlName="anneScolaireId" > 
+                        <mat-option *ngFor="let anneScolaire of anneScolaires" [value]="anneScolaire.id">
+                            {{anneScolaire.annee}} 
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                 <!-- <mat-form-field fxFlex appearance="fill">
+                    <mat-label>enseignant</mat-label>
+                    <mat-select formControlName="enseignantId" > 
+                        <mat-option *ngFor="let enseignant of enseignants" [value]="enseignant.id">
+                            {{enseignant.nom}} {{enseignant.prenom}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+               
+            <!-- </div> -->
 
             <div fxLayout="row wrap">
 
                 <mat-form-field fxFlex appearance="fill">
                     <mat-label>classe</mat-label>
                     <mat-select formControlName="classeId" (valueChange)="onSelectedClasse($event)"> 
-                        <mat-option *ngFor="let classe of classes" [value]="classe.id" >
-                            {{classe.libelle}}
+                        <mat-option *ngFor="let classe of listClasseEnseignant" [value]="classe?.id" >
+                            {{classe?.classeName}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

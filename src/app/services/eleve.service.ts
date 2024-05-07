@@ -35,7 +35,7 @@ export class EleveService {
   }
 
   getAll(){
-    return this.http.get(this.url+'/getAll');
+    return this.http.get(this.url+'/getAll',{headers:new HttpHeaders().set("Content-Type","Application/json")});
   }
 
   delete(id:any){

@@ -48,6 +48,8 @@ export class AuthService {
   }
 
   loadJwtTokenFromLocalStorage() {
+    console.log("loadJwtTokenFromLocalStorage");
+    
     let token = window.localStorage.getItem('token');
     if(token){
       this.loadProfile({"access-token":token});
@@ -71,6 +73,9 @@ export class AuthService {
 }
 
 public isAdmin(){
+  const token:any = localStorage.getItem('token');
+  const tokenPayload:any = jwtDecode(token);
+  this.roles = tokenPayload.scope;
     if (this.roles && this.roles==="ROLE_ADMIN") {
       return true;
     }else{
@@ -79,6 +84,9 @@ public isAdmin(){
 }
 
 public isSurveillant(){
+  const token:any = localStorage.getItem('token');
+  const tokenPayload:any = jwtDecode(token);
+  this.roles = tokenPayload.scope;
   if (this.roles && this.roles==="ROLE_SURVEILLANT") {
     return true;
   }else{
@@ -87,6 +95,9 @@ public isSurveillant(){
 }
 
 public isParent(){
+  const token:any = localStorage.getItem('token');
+  const tokenPayload:any = jwtDecode(token);
+  this.roles = tokenPayload.scope;
   if (this.roles && this.roles==="ROLE_PARENT") {
     return true;
   }else{
@@ -95,6 +106,9 @@ public isParent(){
 }
 
 public isEconome(){
+  const token:any = localStorage.getItem('token');
+  const tokenPayload:any = jwtDecode(token);
+  this.roles = tokenPayload.scope;
   if (this.roles && this.roles==="ROLE_ECONOME") {
     return true;
   }else{
@@ -103,6 +117,9 @@ public isEconome(){
 }
 
 public isEnseignant(){
+  const token:any = localStorage.getItem('token');
+  const tokenPayload:any = jwtDecode(token);
+  this.roles = tokenPayload.scope;
   if (this.roles && this.roles==="ROLE_ENSEIGNANT") {
     return true;
   }else{

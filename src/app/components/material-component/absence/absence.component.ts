@@ -11,6 +11,8 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SnackbarService } from '../../../services/snackbar.service';
 import { GlobalConstants } from '../../../shared/global-constants';
 import { ConfirmationDialogComponent } from '../dialog/confirmation-dialog/confirmation-dialog.component';
+import { EnseignantService } from '../../../services/enseignant.service';
+import { DashboardService } from '../../../services/dashboard.service';
 
 @Component({
   selector: 'app-absence',
@@ -23,6 +25,8 @@ export class AbsenceComponent {
   responseMessage:any;
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
+  parentId: any;
+  telephone: any;
 
   constructor(
     private fb: FormBuilder,
@@ -34,7 +38,6 @@ export class AbsenceComponent {
   ) { }
 
   ngOnInit(): void {
-    this.ngxService.start();
     this.tableData();
   }
   tableData() {

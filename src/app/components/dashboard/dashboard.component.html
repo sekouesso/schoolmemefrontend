@@ -1,89 +1,4 @@
-<mat-card>
-    <mat-card-header>
-        <mat-form-field appearance="fill">
-            <mat-label><mat-icon>search</mat-icon></mat-label>
-            <input matInput (keyup)="applyFilter($event)" #input> 
-        </mat-form-field>
-        <span class="spacer"></span>
-        <!-- <button  (click)="handleAddAction()" mat-raised-button color="primary" align="end">
-            <mat-icon>add_circle</mat-icon> Ajout 
-        </button> -->
-    </mat-card-header>
-    <mat-card-content>
-        <div class="response_table responsivetable">
-            <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                <ng-container matColumnDef="nom" style="width: 20%;">
-                    <th mat-sort-header mat-header-cell *matHeaderCellDef>Nom</th>
-                    <td mat-cell *matCellDef="let element">{{element.nom}} {{element.prenom}}</td>
-                </ng-container>
 
-                <ng-container matColumnDef="matricule" style="width: 10%;">
-                    <th mat-sort-header mat-header-cell *matHeaderCellDef>matricule</th>
-                    <td mat-cell *matCellDef="let element">{{element.matricule}}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="classe" style="width: 20%;">
-                    <th mat-sort-header mat-header-cell *matHeaderCellDef>classe</th>
-                    <td mat-cell *matCellDef="let element">{{element.classe.libelle}}</td>
-                </ng-container>
-
-                <!-- <ng-container matColumnDef="datenaissance">
-                    <th mat-sort-header mat-header-cell *matHeaderCellDef>Date de Naissance</th>
-                    <td mat-cell *matCellDef="let element">{{element.datenaissance|date:"dd MMM yyyy "}}</td>
-                </ng-container> -->
-
-                <ng-container matColumnDef="sexe" style="width: 10%;">
-                    <th mat-sort-header mat-header-cell *matHeaderCellDef>Sexe</th>
-                    <td mat-cell *matCellDef="let element">{{element.sexe}}</td>
-                </ng-container>
-
-                <!-- <ng-container matColumnDef="parent">
-                    <th mat-sort-header mat-header-cell *matHeaderCellDef>parent</th>
-                    <td mat-cell *matCellDef="let element">{{element.parent.nom}} {{element.parent.prenom}}</td>
-                </ng-container> -->
-        
-                <ng-container matColumnDef="edit" style="width: 50%;" >
-                    <th mat-header-cell *matHeaderCellDef>Action</th>
-                    <td mat-cell *matCellDef="let element" class="action-link">
-                        <button mat-icon-button color="primary" matTooltip="Plus d'infos" (click)="handleDetailsAction(element)">
-                            <mat-icon>visibility</mat-icon>
-                        </button>
-                        <button mat-icon-button color="accent" matTooltip="Notes" (click)="handleNoteAction(element)" >
-                            <mat-icon>visibility</mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" matTooltip="présence" (click)="handlePresenceAction(element)">
-                            <mat-icon>visibility</mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" matTooltip="Emploi du temps" (click)="handleEmploiAction(element)" >
-                            <mat-icon>calendar_today</mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" matTooltip="Demande de permissions" (click)="handlePermissionAction(element)" >
-                            <mat-icon>favorite</mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" matTooltip="permissions" (click)="handlePermissionViewAction(element)" >
-                            <mat-icon>visibility</mat-icon>
-                        </button>
-                        <button class="btn btn-success btn-sm" matTooltip="Reglement frais scolaire" (click)="handleReglementAction(element)">
-                             Reglement
-                        </button>
-                        <!-- <button mat-icon-button color="primary" matTooltip="Edit" (click)="handleEditAction(element)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" matTooltip="Delete" (click)="handleDeleteAction(element)">
-                            <mat-icon>delete</mat-icon>
-                        </button> -->
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayColumns;sticky:true"></tr>
-                <tr mat-row *matRowDef="let row; columns:displayColumns;"></tr>
-            </table>
-        </div>
-    </mat-card-content>
-    <br>
-    <mat-card-footer>
-        <mat-paginator [pageSizeOptions]="[4,5,8,10,15,20]" showFirstLastButtons></mat-paginator>
-    </mat-card-footer>
-</mat-card>
 
 <!-- @if (dataSourceNotification) {
     <mat-card>
@@ -162,4 +77,387 @@
     </mat-card>
     
 } -->
+
+@if (this.authService.isAdmin()) {
+    <body>
+        <mat-card>
+            <mat-card-content>Nombre total d'élèves</mat-card-content>
+        </mat-card>
+        <br>
+        <div class="row">
+            <div class="column">
+                <div class="card">
+                    <div class="container">
+                        <h2 class="title">Total Elèves</h2>
+                        <h1 class="title">{{staticCount?.eleves}}</h1>
+                        <p><button class="button" >View Eleves</button></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mat-card>
+            <mat-card-content>Nombre total d'élèves par niveau</mat-card-content>
+        </mat-card>
+        <br>
+        <div class="row">
+            @for (item of CountEleveByClasse; track $index) {
+                <div class="column">
+                    <div class="card">
+                        <div class="container">
+                            <h2 class="title button">{{item?.classe}}</h2>
+                            <h1 class="title">{{item?.effectif}}</h1>
+                            <p><button class="button" >View Eleves</button></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <mat-card>
+            <mat-card-content><h3>Nombre total d'élèves par classe</h3></mat-card-content>
+        </mat-card>
+        <br>
+        <div class="row">
+            @for (item of CountEleveByNiveau; track $index) {
+                <div class="column">
+                    <div class="card">
+                        <div class="container">
+                            <h2 class="title">{{item?.niveau}}</h2>
+                            <h1 class="title">{{item?.effectif}}</h1>
+                            <p><button class="button" >View Eleves</button></p>
+                        </div>
+                    </div>
+                </div>
+            }
+<!--     
+            <div class="column">
+                <div class="card">
+                    <div class="container">
+                        <h2 class="title">Total Product</h2>
+                        <h1 class="title">67</h1>
+                        <p><button class="button" [routerLink]="['/cafe/product']">View Product</button></p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="column">
+                <div class="card">
+                    <div class="container">
+                        <h2 class="title">Total Bill</h2>
+                        <h1 class="title">40</h1>
+                        <p><button class="button" [routerLink]="['/cafe/bill']">View Bill</button></p>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        
+    </body>
+}
+
+@if (this.authService.isEnseignant()) {
+    <body >
+        <div style="margin-top: 2%;">
+            <mat-toolbar color="primary" style="margin-left: 0px !important; margin-right: 0px !important;">
+            
+                <a mat-button class="companyName" routerLink="/">
+                  <span>Les classes</span>
+                </a>
+                <span class="example-spacer"></span>
+                <div fxLayout="row wrap">
+                    <div fxShow="true" fxLayout="row wrap">
+                        @for (item of listClasseEnseignant; track $index) {
+                        <a mat-button (click)="getStaticEnseignantAbsenceEleveHier(item?.id)">{{item?.classeName}}</a>
+                        } @empty {
+                        <span>Pas de classe pour cet enseignant</span>
+                        }
+                    </div>
+                </div>
+                
+            
+              </mat-toolbar>
+        </div>
+        </body>
+}
+
+@if (this.authService.isEconome()) {
+    <body >
+        <div style="margin-top: 2%;">
+            <mat-toolbar color="primary" style="margin-left: 0px !important; margin-right: 0px !important;">
+            
+                <a mat-button class="companyName" routerLink="/">
+                  <span>Les classes</span>
+                </a>
+                <span class="example-spacer"></span>
+                <div fxLayout="row wrap">
+                    <div fxShow="true" fxLayout="row wrap">
+                        @for (item of staticReglementEleves; track $index) {
+                        <a mat-button (click)="gotoEleve($index,item?.classe)">{{item?.classe}}</a>
+                        } @empty {
+                        <li>Pas de classe</li>
+                        }
+                    </div>
+                </div>
+                
+            
+              </mat-toolbar>
+        </div>
+
+        @if (isReglement) {
+            <button (click)="fermer()" class="btn btn-danger btn-block">Fermer</button>
+            <div class="row" >
+                <div class="card-body table-responsive p-0 mr-1 column" style="height: 300px;" id="example1wrapper">
+                    <h3>Première tranche réglé {{classeName}}</h3>
+                    <table class="table table-head-fixed text-nowrap" id="exemple1">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Eleves</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of elevesPremierTranche; track $index) {
+                            <tr>
+                                <td>{{$index+1}}</td>
+                                <td>{{item}}</td>
+                            </tr> 
+                            } @empty {
+                                <tr>
+                                    <td colspan="2" class="text-danger">Aucun élèves</td>
+                                </tr> 
+                            }
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-body table-responsive p-0 mr-1 column" style="height: 300px;">
+                    <h3>Première tranche non réglé {{classeName}}</h3>
+                    <table class="table table-head-fixed text-nowrap">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Eleves</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of elevesNonPremierTranche; track $index) {
+                            <tr>
+                                <td>{{$index+1}}</td>
+                                <td>{{item}}</td>
+                            </tr> 
+                            } @empty {
+                                <tr>
+                                    <td colspan="2" class="text-danger">Aucun élèves</td>
+                                </tr> 
+                            }
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-body table-responsive p-0 mr-1 column" style="height: 300px;">
+                    <h3>Deuxième tranche réglé {{classeName}}</h3>
+                    <table class="table table-head-fixed text-nowrap">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Eleves</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of elevesDeuxiemeTranche; track $index) {
+                            <tr>
+                                <td>{{$index+1}}</td>
+                                <td>{{item}}</td>
+                            </tr> 
+                            } @empty {
+                                <tr>
+                                    <td colspan="2" class="text-danger">Aucun élèves</td>
+                                </tr> 
+                            }
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-body table-responsive p-0 mr-1 column" style="height: 300px;">
+                    <h3>Deuxième tranche non réglé {{classeName}}</h3>
+                    <table class="table table-head-fixed text-nowrap">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Eleves</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of elevesNonDeuxiemeTranche; track $index) {
+                            <tr>
+                                <td>{{$index+1}}</td>
+                                <td>{{item}}</td>
+                            </tr> 
+                            } @empty {
+                                <tr>
+                                    <td colspan="2" class="text-danger">Aucun élèves</td>
+                                </tr> 
+                            }
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-body table-responsive p-0 mr-1 column" style="height: 300px;">
+                    <h3>Troisième tranche réglé {{classeName}}</h3>
+                    <table class="table table-head-fixed text-nowrap">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Eleves</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of elevesTroisiemeTranche; track $index) {
+                            <tr>
+                                <td>{{$index+1}}</td>
+                                <td>{{item}}</td>
+                            </tr> 
+                            } @empty {
+                                <tr>
+                                    <td colspan="2" class="text-danger">Aucun élèves</td>
+                                </tr> 
+                            }
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-body table-responsive p-0 mr-1 column" style="height: 300px;">
+                    <h3>Troixième tranche non réglé {{classeName}}</h3>
+                    <table class="table table-head-fixed text-nowrap">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Eleves</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of elevesNonTroisiemeTranche; track $index) {
+                            <tr>
+                                <td>{{$index+1}}</td>
+                                <td>{{item}}</td>
+                            </tr> 
+                            } @empty {
+                                <tr>
+                                    <td colspan="2" class="text-danger">Aucun élèves</td>
+                                </tr> 
+                            }
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+        }
+        <mat-card>
+            <mat-card-content>Règlement par tranche des élèves par niveau</mat-card-content>
+        </mat-card>
+        <br>
+        <div class="row">
+            @for (item of staticEconome; track $index) {
+                <div class="column">
+                    <div class="card">
+                        <div class="container">
+                            <h2 class="title button">{{item?.niveau}}</h2>
+                            <h1 class="title">Première tranche {{item?.premiereTranche}}</h1>
+                            <h1 class="title">Deuxième tranche {{item?.deuxiemeTranche}}</h1>
+                            <h1 class="title">Troisième tranche {{item?.troisiemeTranche}}</h1>
+                            <p><button class="button" >View Eleves</button></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </body>
+}
+
+@if (this.authService.isParent()) {
+    <mat-card>
+        <mat-card-header>
+            <mat-form-field appearance="fill">
+                <mat-label><mat-icon>search</mat-icon></mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input> 
+            </mat-form-field>
+            <span class="spacer"></span>
+            <!-- <button  (click)="handleAddAction()" mat-raised-button color="primary" align="end">
+                <mat-icon>add_circle</mat-icon> Ajout 
+            </button> -->
+        </mat-card-header>
+        <mat-card-content>
+            <div class="response_table responsivetable">
+                <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="nom" style="width: 20%;">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>Nom</th>
+                        <td mat-cell *matCellDef="let element">{{element.nom}} {{element.prenom}}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="matricule" style="width: 10%;">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>matricule</th>
+                        <td mat-cell *matCellDef="let element">{{element.matricule}}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="classe" style="width: 20%;">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>classe</th>
+                        <td mat-cell *matCellDef="let element">{{element.classe.libelle}}</td>
+                    </ng-container>
+    
+                    <!-- <ng-container matColumnDef="datenaissance">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>Date de Naissance</th>
+                        <td mat-cell *matCellDef="let element">{{element.datenaissance|date:"dd MMM yyyy "}}</td>
+                    </ng-container> -->
+    
+                    <ng-container matColumnDef="sexe" style="width: 10%;">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>Sexe</th>
+                        <td mat-cell *matCellDef="let element">{{element.sexe}}</td>
+                    </ng-container>
+    
+                    <!-- <ng-container matColumnDef="parent">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>parent</th>
+                        <td mat-cell *matCellDef="let element">{{element.parent.nom}} {{element.parent.prenom}}</td>
+                    </ng-container> -->
+            
+                    <ng-container matColumnDef="edit" style="width: 50%;" >
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let element" class="action-link">
+                            <button class="btn btn-primary btn-sm" matTooltip="Plus d'infos" (click)="handleDetailsAction(element)">
+                                Détails
+                            </button>
+                            <button class="btn btn-success btn-sm" matTooltip="Notes" (click)="handleNoteAction(element)" >
+                                Notes
+                            </button>
+                            <button class="btn btn-danger btn-sm" matTooltip="présence" (click)="handlePresenceAction(element)">
+                                Présences
+                            </button>
+                            <button class="btn btn-warning btn-sm" matTooltip="Emploi du temps" (click)="handleEmploiAction(element)" >
+                                Emploi du temps
+                            </button>
+                            <button class="btn btn-secondary btn-sm" matTooltip="Demande de permissions" (click)="handlePermissionAction(element)" >
+                                Demande de permissions
+                            </button>
+                            <button class="btn btn-primary btn-sm" matTooltip="permissions" (click)="handlePermissionViewAction(element)" >
+                                Permissions
+                            </button>
+                            <button class="btn btn-success btn-sm" matTooltip="Reglement frais scolaire" (click)="handleReglementAction(element)">
+                                 Reglement
+                            </button>
+                            <!-- <button mat-icon-button color="primary" matTooltip="Edit" (click)="handleEditAction(element)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" matTooltip="Delete" (click)="handleDeleteAction(element)">
+                                <mat-icon>delete</mat-icon>
+                            </button> -->
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayColumns;sticky:true"></tr>
+                    <tr mat-row *matRowDef="let row; columns:displayColumns;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <br>
+        <mat-card-footer>
+            <mat-paginator [pageSizeOptions]="[4,5,8,10,15,20]" showFirstLastButtons></mat-paginator>
+        </mat-card-footer>
+    </mat-card>
+}
+
+@if (this.authService.isSurveillant()) {
+    <div >
+        <h1>Surveillant is loggedIn</h1>
+    </div>
+}
 

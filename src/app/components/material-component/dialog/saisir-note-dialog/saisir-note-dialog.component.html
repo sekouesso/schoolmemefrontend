@@ -9,44 +9,37 @@
 </mat-toolbar>
 
 <mat-dialog-content class="mat-typography" >
-    <form [formGroup]="noteForm">
+    <form [formGroup]="saisirnoteForm">
         <div fxFlex fxLayout="column">
             <div fxLayout="row wrap">
                 <mat-form-field fxFlex appearance="fill">
                     <mat-label>numero</mat-label>
                     <input matInput formControlName="numero" required readonly>
-                    <mat-error *ngIf="noteForm.controls.numero.touched && noteForm.controls.numero.invalid">
-                        <span *ngIf="noteForm.controls.numero.errors.required">This field is mandatory</span>
-                        <span *ngIf="noteForm.controls.numero.errors.pattern">This field is invalid.</span>
+                    <mat-error *ngIf="saisirnoteForm.controls.numero.touched && saisirnoteForm.controls.numero.invalid">
+                        <span *ngIf="saisirnoteForm.controls.numero.errors.required">This field is mandatory</span>
+                        <span *ngIf="saisirnoteForm.controls.numero.errors.pattern">This field is invalid.</span>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field fxFlex appearance="fill">
                     <mat-label>annee</mat-label>
                     <input matInput formControlName="annee" required readonly>
-                    <mat-error *ngIf="noteForm.controls.annee.touched && noteForm.controls.annee.invalid">
-                        <span *ngIf="noteForm.controls.annee.errors.required">This field is mandatory</span>
-                        <span *ngIf="noteForm.controls.annee.errors.pattern">This field is invalid.</span>
+                    <mat-error *ngIf="saisirnoteForm.controls.annee.touched && saisirnoteForm.controls.annee.invalid">
+                        <span *ngIf="saisirnoteForm.controls.annee.errors.required">This field is mandatory</span>
+                        <span *ngIf="saisirnoteForm.controls.annee.errors.pattern">This field is invalid.</span>
                     </mat-error>
                 </mat-form-field>
             </div>
 
             <div fxLayout="row wrap">
-                <mat-form-field fxFlex appearance="fill">
-                    <mat-label>evaluation</mat-label>
-                    <mat-select formControlName="evaluationId" > 
-                        <mat-option *ngFor="let evaluation of evaluations" [value]="evaluation.id">
-                            {{evaluation.typeNote.libelle}} du {{evaluation.dateEvaluation|date:"d-M-Y"}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field fxFlex appearance="fill">
-                    <mat-label>Pourcentage</mat-label>
-                    <input matInput formControlName="pourcentage" required >
-                    <mat-error *ngIf="noteForm.controls.pourcentage.touched && noteForm.controls.pourcentage.invalid">
-                        <span *ngIf="noteForm.controls.pourcentage.errors.required">This field is mandatory</span>
-                        <span *ngIf="noteForm.controls.pourcentage.errors.pattern">This field is invalid.</span>
-                    </mat-error>
-                </mat-form-field>
+                
+                <div fxFlex appearance="fill">
+                    <mat-label>Matiere</mat-label>
+                    <ng-select formControlName="matiereId" > 
+                        <ng-option *ngFor="let matiere of matieres" [value]="matiere.id">
+                            {{matiere.libelle}} 
+                        </ng-option>
+                    </ng-select>
+                </div>
 
             </div>
 
@@ -63,14 +56,14 @@
 
                 <mat-form-field fxFlex appearance="fill" style="margin-left: 7px;">
                     <mat-label>trimestre</mat-label>
-                    <mat-select formControlName="semestre" > 
+                    <mat-select formControlName="session" > 
                         <mat-option *ngFor="let trimestre of trimestres" [value]="trimestre" >
                             {{trimestre}}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="noteForm.controls.semestre.touched && noteForm.controls.semestre.invalid">
-                        <span *ngIf="noteForm.controls.semestre.errors.required">This field is mandatory</span>
-                        <span *ngIf="noteForm.controls.semestre.errors.pattern">This field is invalid.</span>
+                    <mat-error *ngIf="saisirnoteForm.controls.session.touched && saisirnoteForm.controls.session.invalid">
+                        <span *ngIf="saisirnoteForm.controls.session.errors.required">This field is mandatory</span>
+                        <span *ngIf="saisirnoteForm.controls.session.errors.pattern">This field is invalid.</span>
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -86,43 +79,49 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field fxFlex appearance="fill">
+                <!-- <mat-form-field fxFlex appearance="fill">
                     <mat-label>coefficient</mat-label>
                     <input matInput formControlName="coefficient" required readonly>
-                    <mat-error *ngIf="noteForm.controls.coefficient.touched && noteForm.controls.coefficient.invalid">
-                        <span *ngIf="noteForm.controls.coefficient.errors.required">This field is mandatory</span>
-                        <span *ngIf="noteForm.controls.coefficient.errors.pattern">This field is invalid.</span>
+                    <mat-error *ngIf="saisirnoteForm.controls.coefficient.touched && saisirnoteForm.controls.coefficient.invalid">
+                        <span *ngIf="saisirnoteForm.controls.coefficient.errors.required">This field is mandatory</span>
+                        <span *ngIf="saisirnoteForm.controls.coefficient.errors.pattern">This field is invalid.</span>
                     </mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
                 
                 
             </div>
             @if (eleves) {
                 <div fxLayout="row wrap">
-               <table class="table table-bordered table-responsive table-hover table-striped"  formArrayName="lnotesDtos">
+               <table class="table table-bordered table-responsive table-hover table-striped"  formArrayName="lsaisirNoteDtos">
 
                 <thead class="bg-primary text-white">
                     <tr>
                         <td>Eleve</td>
-                        <td>Note</td>
+                        <td>Interro</td>
+                        <td>Devoir</td>
+                        <td>Compos</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of getLnotesDtos.controls;let i=index" [formGroupName]="i">
+                    <tr *ngFor="let item of getlsaisirNoteDtos.controls;let i=index" [formGroupName]="i">
                         
                         <td style="width: 100%;" class="col-12">
                             <mat-form-field fxFlex appearance="fill">
-                            <mat-select  formControlName="eleveId" required >
+                            <mat-select  formControlName="eleveId" required readonly>
                                 <mat-option *ngFor="let item of eleves" [value]="item.id" readonly>
                                     {{item.nom}} {{item.prenom}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
                         </td>
-                        <td style="width: 100%;">
-                            
-                                <input matInput class="form-control" formControlName="moy" required/>
-                            
+                        <td >
+                            <input type="number" min="0" max="20" matInput class="form-control" formControlName="interro" required/>
+                        </td>
+                        <td >
+                            <input matInput class="form-control" formControlName="devoir" required/>
+                        </td>
+                        <td >
+                            <input matInput class="form-control" formControlName="compos" required/>
                         </td>
                     </tr>
                 </tbody>
@@ -137,13 +136,14 @@
 
 <mat-dialog-actions align="end">
     <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
-        [disabled]="!(noteForm.valid && noteForm.dirty)">
+        [disabled]="!(saisirnoteForm.valid && saisirnoteForm.dirty)">
         <mat-icon>save</mat-icon> {{action}}
     </button>
     <button mat-raised-button color="warn" mat-dialog-close>
         <mat-icon>cancel</mat-icon>Close
     </button>
 </mat-dialog-actions>
+
 
 
 

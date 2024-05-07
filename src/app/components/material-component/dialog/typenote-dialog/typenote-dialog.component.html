@@ -1,7 +1,7 @@
 
 <mat-toolbar color="primary">
     <mat-toolbar-row fxLayout="row">
-        <span>{{ dialogAction.action}} Type de note</span>
+        <span>{{ dialogAction}} Type de note</span>
         <span class="spacer"></span>
         <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
             <mat-icon>close</mat-icon>
@@ -13,9 +13,13 @@
     <form [formGroup]="typenoteForm">
         <div fxFlex fxLayout="column">
             <div fxLayout="row wrap">
-                <mat-form-field fxFlex appearance="fill">
+                <mat-form-field fxFlex appearance="fill" style="margin-left: 7px;">
                     <mat-label>Libelle</mat-label>
-                    <input matInput formControlName="libelle" required>
+                    <mat-select formControlName="libelle" > 
+                        <mat-option *ngFor="let type of types" [value]="type" >
+                            {{type}}
+                        </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="typenoteForm.controls.libelle.touched && typenoteForm.controls.libelle.invalid">
                         <span *ngIf="typenoteForm.controls.libelle.errors.required">This field is mandatory</span>
                         <span *ngIf="typenoteForm.controls.libelle.errors.pattern">This field is invalid.</span>

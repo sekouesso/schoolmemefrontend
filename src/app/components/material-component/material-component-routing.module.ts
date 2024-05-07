@@ -24,6 +24,7 @@ import { TypenoteComponent } from './typenote/typenote.component';
 import { CycleComponent } from './cycle/cycle.component';
 import { NiveauComponent } from './niveau/niveau.component';
 import { AnneScolaireComponent } from './anne-scolaire/anne-scolaire.component';
+import { SaisirnoteComponent } from './saisirnote/saisirnote.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
 {
   path:'tarifs',
   component: TarifsComponent   
+},
+{
+  path:'saisirnote',
+  component: SaisirnoteComponent   
 },
 {
   path:'eleves/reglement',

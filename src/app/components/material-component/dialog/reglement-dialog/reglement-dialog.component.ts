@@ -44,7 +44,10 @@ export class ReglementDialogComponent {
     private snackbarService: SnackbarService,
     private datePipe: DatePipe,
     private fb: FormBuilder
-  ){}
+  ){
+    console.log(this.dialogData);
+    
+  }
 
   get f() { return this.reglementForm.controls }
 
@@ -57,11 +60,11 @@ export class ReglementDialogComponent {
       annee: [this.annee, [Validators.required]],
       numero:[null,[Validators.required]],
       montant:[null,[Validators.required]],
-      dateReglement: ['', [Validators.required]],
+      dateReglement: [this.date, [Validators.required]],
       inscriptionId: ['', [Validators.required]],      
-      anneScolaireId: ['', [Validators.required]],
-      classeId: ['', [Validators.required]],
-      eleveId: ['', [Validators.required]]
+      anneScolaireId: [this.dialogData.eleve.anneScolaire.id, [Validators.required]],
+      classeId: [this.dialogData.eleve.classe.id, [Validators.required]],
+      eleveId: [this.dialogData.eleve.id, [Validators.required]]
     });
 if(!this.dialogData.data){
   this.reglementService.getNumero(this.annee).subscribe(

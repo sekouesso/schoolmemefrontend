@@ -11,6 +11,7 @@ import { SnackbarService } from '../../../services/snackbar.service';
 import { GlobalConstants } from '../../../shared/global-constants';
 import { ConfirmationDialogComponent } from '../dialog/confirmation-dialog/confirmation-dialog.component';
 import { EleveDialogComponent } from '../dialog/eleve-dialog/eleve-dialog.component';
+import { ReglementEleveDialogComponent } from '../dialog/reglement-eleve-dialog/reglement-eleve-dialog.component';
 
 @Component({
   selector: 'app-eleve',
@@ -18,7 +19,7 @@ import { EleveDialogComponent } from '../dialog/eleve-dialog/eleve-dialog.compon
   styleUrl: './eleve.component.scss'
 })
 export class EleveComponent {
-  displayColumns: string[]=['nom','telephone','datenaissance','sexe','classe','parent','edit'];
+  displayColumns: string[]=['nom','telephone','datenaissance','sexe','edit'];
   dataSource:any;
   length:any;
   responseMessage:any;
@@ -128,4 +129,23 @@ export class EleveComponent {
       }
     });
     }
+
+
+    //========================= REGLEMENT ============================= //
+
+    handleReglementAction(values: any) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        action:'Les règlements de '+values.nom+' '+values.prenom,
+        data: values
+      };
+      dialogConfig.width = '700px';
+      dialogConfig.disableClose = true;
+      const dialogRef = this.dialog.open(ReglementEleveDialogComponent,dialogConfig);
+      this.router.events.subscribe(() => {
+        dialogRef.close();
+      });
+      
+      }
+
 }

@@ -1,25 +1,26 @@
 import { Component, ViewChild } from '@angular/core';
-import { GlobalConstants } from '../../../shared/global-constants';
+import { FormBuilder } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { SnackbarService } from '../../../services/snackbar.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { TarifsService } from '../../../services/tarifs.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { TarifsDialogComponent } from '../dialog/tarifs-dialog/tarifs-dialog.component';
+import { Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { NoteService } from '../../../services/note.service';
+import { SnackbarService } from '../../../services/snackbar.service';
+import { GlobalConstants } from '../../../shared/global-constants';
 import { ConfirmationDialogComponent } from '../dialog/confirmation-dialog/confirmation-dialog.component';
+import { NoteDialogComponent } from '../dialog/note-dialog/note-dialog.component';
+import { SaisirNoteDialogComponent } from '../dialog/saisir-note-dialog/saisir-note-dialog.component';
+import { SaisirNoteService } from '../../../services/saisir-note.service';
 
 @Component({
-  selector: 'app-tarifs',
-  templateUrl: './tarifs.component.html',
-  styleUrl: './tarifs.component.scss'
+  selector: 'app-saisirnote',
+  templateUrl: './saisirnote.component.html',
+  styleUrl: './saisirnote.component.scss'
 })
-export class TarifsComponent {
-
-  displayColumns: string[]=['code','frais','montant','date4','niveau','anneScolaire','edit'];
+export class SaisirnoteComponent {
+  displayColumns: string[]=['numero','annee','anneScolaire','classe','edit'];
   dataSource:any;
   length:any;
   responseMessage:any;
@@ -31,7 +32,7 @@ export class TarifsComponent {
     private router: Router,
     private snackbarService: SnackbarService,
     private ngxService: NgxUiLoaderService,
-    private tarifsService: TarifsService,
+    private saisirnoteService: SaisirNoteService,
     private dialog: MatDialog
   ) { }
   ngOnInit(): void {
@@ -40,12 +41,12 @@ export class TarifsComponent {
   }
 
   tableData() {
-    this.tarifsService.getAll().subscribe({next:(response:any)=>{
+    this.saisirnoteService.getAll().subscribe({next:(response:any)=>{
       this.ngxService.stop();
-      console.log(response);
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator=this.paginator;
       this.dataSource.sort = this.sort;
+      console.log(response);
       
     },
     error:(error:any)=>{
@@ -55,7 +56,6 @@ export class TarifsComponent {
         this.responseMessage = error.error?.message;
       }else {
         this.responseMessage = GlobalConstants.generisError;
-        
       }
       this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
     }
@@ -73,11 +73,12 @@ export class TarifsComponent {
       action:'Add',
     };
     dialogConfig.width = '700px';
-    const dialogRef = this.dialog.open(TarifsDialogComponent,dialogConfig);
+    dialogConfig.disableClose = true;
+    const dialogRef = this.dialog.open(SaisirNoteDialogComponent,dialogConfig);
     this.router.events.subscribe(() => {
       dialogRef.close();
     });
-    const sub = dialogRef.componentInstance.onAddTarifs.subscribe((response) => {
+    const sub = dialogRef.componentInstance.onAddSaisirNote.subscribe((response) => {
       this.tableData();
     });
     }
@@ -89,30 +90,33 @@ export class TarifsComponent {
       data: values
     };
     dialogConfig.width = '700px';
-    const dialogRef = this.dialog.open(TarifsDialogComponent,dialogConfig);
+    dialogConfig.disableClose = true;
+    const dialogRef = this.dialog.open(SaisirNoteDialogComponent,dialogConfig);
     this.router.events.subscribe(() => {
       dialogRef.close();
     });
-    const sub = dialogRef.componentInstance.onEditTarifs.subscribe((response) => {
+    const sub = dialogRef.componentInstance.onEditSaisirNote.subscribe((response) => {
       this.tableData();
     });
     }
   handleDeleteAction(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      message:'delete'+values.code+' Tarifs',
+      message:'delete'+values.numero+' note',
       confirmation: true,
     };
+    dialogConfig.disableClose = true;
+    dialogConfig.width = "500px";
     const dialogRef = this.dialog.open(ConfirmationDialogComponent,dialogConfig);
     const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response) => {
       this.ngxService.start();
-      this.deleteTarifs(values.id);
+      this.delete(values.id);
       dialogRef.close();
     });
     }
 
-    deleteTarifs(id:any){
-      this.tarifsService.delete(id).subscribe({next:(response:any)=>{
+    delete(id:any){
+      this.saisirnoteService.delete(id).subscribe({next:(response:any)=>{
         this.ngxService.stop();
         this.tableData();
         this.responseMessage = response?.message;
@@ -130,6 +134,4 @@ export class TarifsComponent {
       }
     });
     }
-
-
 }

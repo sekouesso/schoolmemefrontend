@@ -58,7 +58,9 @@ export class LoginComponent {
           next: (data: any) => {
             this.parent = data;
             window.localStorage.setItem('user', JSON.stringify(this.parent));
-            // console.log(data);
+            this.snackbarService.openSnackbar("success","")
+      this.router.navigate(['/school/dashboard']);
+            console.log(data);
             
           },
           error: (error: any) => {
@@ -67,8 +69,8 @@ export class LoginComponent {
           },
         }
       );
-      this.snackbarService.openSnackbar("success","")
-      this.router.navigate(['/school/dashboard']);
+      // this.snackbarService.openSnackbar("success","")
+      // this.router.navigate(['/school/dashboard']);
     },error:(error:any)=>{
       this.ngxService.stop();
       if(error.error?.message){

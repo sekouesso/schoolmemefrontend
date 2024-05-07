@@ -22,10 +22,10 @@
                     <td mat-cell *matCellDef="let element">{{element.telephone}}</td>
                 </ng-container>
 
-                <ng-container matColumnDef="classe">
+                <!-- <ng-container matColumnDef="classe">
                     <th mat-sort-header mat-header-cell *matHeaderCellDef>classe</th>
                     <td mat-cell *matCellDef="let element">{{element.classe.libelle}}</td>
-                </ng-container>
+                </ng-container> -->
 
                 <ng-container matColumnDef="datenaissance">
                     <th mat-sort-header mat-header-cell *matHeaderCellDef>Date de Naissance</th>
@@ -37,10 +37,10 @@
                     <td mat-cell *matCellDef="let element">{{element.sexe}}</td>
                 </ng-container>
 
-                <ng-container matColumnDef="parent">
+                <!-- <ng-container matColumnDef="parent">
                     <th mat-sort-header mat-header-cell *matHeaderCellDef>parent</th>
                     <td mat-cell *matCellDef="let element">{{element.parent.nom}} {{element.parent.prenom}}</td>
-                </ng-container>
+                </ng-container> -->
         
                 <ng-container matColumnDef="edit">
                     <th mat-header-cell *matHeaderCellDef>Action</th>
@@ -51,6 +51,9 @@
                         <button mat-icon-button color="warn" matTooltip="Delete" (click)="handleDeleteAction(element)">
                             <mat-icon>delete</mat-icon>
                         </button>
+                        <button class="btn btn-success btn-sm" matTooltip="Reglement frais scolaire" (click)="handleReglementAction(element)">
+                            Reglement
+                       </button>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayColumns;sticky:true"></tr>

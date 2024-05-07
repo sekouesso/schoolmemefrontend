@@ -14,7 +14,7 @@
             <div fxLayout="row wrap">
                 <mat-form-field fxFlex appearance="fill">
                     <mat-label>Libelle</mat-label>
-                    <input matInput formControlName="libelle" required readonly>
+                    <input matInput formControlName="libelle" required >
                     <mat-error *ngIf="niveauForm.controls.libelle.touched && niveauForm.controls.libelle.invalid">
                         <span *ngIf="niveauForm.controls.libelle.errors.required">This field is mandatory</span>
                         <span *ngIf="niveauForm.controls.libelle.errors.pattern">This field is invalid.</span>

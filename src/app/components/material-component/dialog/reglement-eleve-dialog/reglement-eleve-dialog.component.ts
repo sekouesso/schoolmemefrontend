@@ -1,6 +1,6 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,6 +10,8 @@ import { SnackbarService } from '../../../../services/snackbar.service';
 import { GlobalConstants } from '../../../../shared/global-constants';
 import { ReglementService } from '../../../../services/reglement.service';
 import { TarifsService } from '../../../../services/tarifs.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ReglementDialogComponent } from '../reglement-dialog/reglement-dialog.component';
 
 @Component({
   selector: 'app-reglement-eleve-dialog',
@@ -32,6 +34,7 @@ export class ReglementEleveDialogComponent {
   cycleId: any;
   cumulReglement=0;
   rest: number=0;
+  niveauId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -52,6 +55,7 @@ export class ReglementEleveDialogComponent {
     this.eleveId = this.dialogData.data.id;
     this.anneScolaireId = this.dialogData.data.anneScolaire.id;
     this.cycleId = this.dialogData.data.classe.niveau.cycle.id;
+    this.niveauId = this.dialogData.data.classe.niveau.id;
     console.log(this.cycleId,this.anneScolaireId);
     
 
@@ -72,10 +76,11 @@ export class ReglementEleveDialogComponent {
       this.cumulReglement += reglement.montant;
       
     });
-    this.tarifsService.getEcolage(this.cycleId,this.anneScolaireId).subscribe({
+    this.tarifsService.getEcolage(this.niveauId,this.anneScolaireId).subscribe({
       next:(response:any) => {
         this.ecolage = response;
         this.rest    = this.ecolage-this.cumulReglement;
+        console.log(this.ecolage);
         
       },
       error:(error:any) => {
@@ -108,7 +113,7 @@ export class ReglementEleveDialogComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   getEcolage() {
-    this.tarifsService.getEcolage(this.cycleId,this.anneScolaireId).subscribe({
+    this.tarifsService.getEcolage(this.niveauId,this.anneScolaireId).subscribe({
       next:(response:any) => {
         this.ecolage = response;
         console.log(this.ecolage);
@@ -126,4 +131,77 @@ export class ReglementEleveDialogComponent {
       }
     })
   }
+
+// ========================= REGLEMENT ========================= //
+  handleAddAction() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action:'Add',
+      eleve:this.dialogData.data
+    };
+    dialogConfig.width = '700px';
+    dialogConfig.disableClose = true;
+    const dialogRef = this.dialog.open(ReglementDialogComponent,dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
+    const sub = dialogRef.componentInstance.onAddReglement.subscribe((response) => {
+      this.tableData();
+    });
+    }
+
+    handleEditAction(values:any) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        action:'Edit',
+        data:values
+      };
+      dialogConfig.width = '700px';
+      dialogConfig.disableClose = true;
+      const dialogRef = this.dialog.open(ReglementDialogComponent,dialogConfig);
+      this.router.events.subscribe(() => {
+        dialogRef.close();
+      });
+      const sub = dialogRef.componentInstance.onEditReglement.subscribe((response) => {
+        this.tableData();
+      });
+      }
+
+      handleDeleteAction(values: any) {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = {
+          message:'delete '+values.numero+' Evaluation',
+          confirmation: true,
+        };
+        dialogConfig.disableClose = true;
+        dialogConfig.width = "500px";
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent,dialogConfig);
+        const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((response) => {
+          this.ngxService.start();
+          this.delete(values.id);
+          dialogRef.close();
+        });
+        }
+    
+        delete(id:any){
+          this.reglementService.delete(id).subscribe({next:(response:any)=>{
+            this.ngxService.stop();
+            this.tableData();
+            this.responseMessage = response?.message;
+            this.snackbarService.openSnackbar(this.responseMessage,'success');
+          },
+          error:(error:any)=>{
+            this.ngxService.stop();
+            console.log(error.error?.message);
+            if(error.error?.message){
+              this.responseMessage = error.error?.message;
+            }else {
+              this.responseMessage = GlobalConstants.generisError;
+            }
+            this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+          }
+        });
+        }
 }
+
+

@@ -27,8 +27,14 @@ export class TarifsService {
     });
   }
 
-  getEcolage(cycleId : any, anneScolaireId : any) {
-    return this.httpClient.get(`${this.url}/getEcolage/${cycleId}/${anneScolaireId}`,{
+  getEcolage(niveauId : any, anneScolaireId : any) {
+    return this.httpClient.get(`${this.url}/getEcolage/${niveauId}/${anneScolaireId}`,{
+      headers:new HttpHeaders().set("Content-Type","Application/json")
+    });
+  }
+
+  getFraisInscription(niveauId : any, anneScolaireId : any) {
+    return this.httpClient.get(`${this.url}/getFraisInscription/${niveauId}/${anneScolaireId}`,{
       headers:new HttpHeaders().set("Content-Type","Application/json")
     });
   }
