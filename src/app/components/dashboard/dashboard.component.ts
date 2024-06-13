@@ -26,10 +26,18 @@ import 'datatables.net-buttons-dt';
 import { DataTableDirective } from 'angular-datatables';
 
 import $ from 'jquery';
-import 'datatables.net'
+import 'datatables.net';
 import DataTables from 'datatables.net';
 import { Subject } from 'rxjs';
 import { EnseignantService } from '../../services/enseignant.service';
+
+
+// import jsPDF from 'jspdf'
+// import autoTable from 'jspdf-autotable'
+
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -70,6 +78,19 @@ export class DashboardComponent {
   //dtOptions: DataTable.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   telephone: any;
+  isEleveAbsentEnseignant: boolean=false;
+  absenceDateForm!: FormGroup;
+  absenceEleveBetweenDate1AndDate2: any;
+  isSurveillantActive: boolean=false;
+  isSurveillantActiveParClasse: boolean=false;
+  dates: any;
+
+   columns = [
+                {title: "ID", dataKey: "id"},
+                {title: "NOM & PRENOM(S)", dataKey: "nom"}
+            ];
+
+
 
   constructor(
     private fb: FormBuilder,
@@ -99,15 +120,20 @@ export class DashboardComponent {
       createdAt:[null],
     });
 
+    this.absenceDateForm = this.fb.group({
+      date1:[null,[Validators.required]],
+      date2:[null,[Validators.required]],
+    });
+
     this.tableData();
     this.getStaticEconome();
     this.getStaticReglementEleves();
     this.getCount();
     this.getCountEleveByClasse();
     this.getCountEleveByNiveau();
-    //this.getStaticAbsenceEleveHier();
+    this.getStaticAbsenceEleveHier();
     this.getClasseEnseignant(); 
-
+    this.getClasses();
     let table = new DataTables("#exemple1");
     console.log(table.$("#exemple").DataTable({
        "lengthChange": false, "autoWidth": false,
@@ -116,6 +142,31 @@ export class DashboardComponent {
     
     
   }
+
+
+//   createPDF(data: any): void {
+//     var doc = new jsPDF('p', 'pt');
+// (doc as any).autoTable(["NOM & PRENOM(S)"], [data]);
+// doc.save('table.pdf');
+//   }
+
+createPDF(data: any): void {
+  var doc = new jsPDF()
+  var rows:any =[];
+  data.map(function(x:any){
+          rows.push({nom:x});
+  });
+  (doc as any).autoTable({
+    columns:[
+      { header: 'NOM', dataKey: 'nom' }
+    ],
+    body:rows,
+    margin:{top:35},
+    didDrawPage:function(){
+    doc.text("Liste des élèves ", 20, 30);
+  }})
+  doc.save("table.pdf");
+}
 
   tableData() {
     this.eleveService.findAllByParentId(this.parentId).subscribe({next:(response:any)=>{
@@ -465,10 +516,76 @@ export class DashboardComponent {
   //****************************START SURVEILLANT*********************************** */
 
   getStaticAbsenceEleveHier() {
+    this.isSurveillantActive = true;
+    this.isSurveillantActiveParClasse = false;
     this.dashboardService.getStaticEleveHier().subscribe({next:(response:any)=>{
       this.ngxService.stop();
       this.listElevesAbsents = response;
       console.log(response);
+      const options:any = {
+        lengthChange: false,
+        autoWidth: false,
+        dom: 'Bfrtip',
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis'],
+        columnDefs: [{
+          "defaultContent": "*",
+          "targets": "_all"
+        }]
+      };
+  
+      options['responsive'] = true;
+      $(document).ready(function () {
+        $('.abselevesurveillant1').DataTable(options).buttons().containers().appendTo('.abselevesurveillant1 .col-sm-3:eq(0)');
+        
+      });
+    },
+    error:(error:any)=>{
+      this.ngxService.stop();
+      console.log(error.error?.message);
+      if(error.error?.message){
+        this.responseMessage = error.error?.message;
+      }else {
+        this.responseMessage = GlobalConstants.generisError;
+      }
+      this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+    }
+  });
+  }
+
+  handleAbsenceDateSubmit(){
+    this.isSurveillantActive = false;
+    this.isSurveillantActiveParClasse = true;
+    let formData = this.absenceDateForm.value;
+    let data = {
+      date1: formData.date1,
+      date2: formData.date2
+    }
+    let d1 = new Date(formData.date1);
+    let d2 = new Date(formData.date2);
+    this.dates = {
+      dat1:d1,
+      dat2:d2
+    };
+    this.dashboardService.getStaticAbsenceEleveBetweenDate1AndDate2(data.date1,data.date2).subscribe({next:(response:any)=>{
+      this.ngxService.stop();
+      this.absenceEleveBetweenDate1AndDate2 = response;
+      console.log(response);
+      const options:any = {
+        lengthChange: false,
+        autoWidth: false,
+        dom: 'Bfrtip',
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis'],
+        columnDefs: [{
+          "defaultContent": "*",
+          "targets": "_all"
+        }]
+      };
+  
+      options['responsive'] = true;
+      $(document).ready(function () {
+        $('.abselevesurveillant').DataTable(options).buttons().containers().appendTo('.abselevesurveillant .col-sm-3:eq(0)');
+        
+      });
       
     },
     error:(error:any)=>{
@@ -491,6 +608,7 @@ export class DashboardComponent {
   getClasseEnseignant() {
     this.enseignantService.findEnseignantByTelephone(this.telephone).subscribe({next:(data:any)=>{
       this.ngxService.stop();
+     if (data) {
       this.dashboardService.getClasseEnseignant(data.id).subscribe({next:(response:any)=>{
         this.ngxService.stop();
         this.listClasseEnseignant = response;
@@ -508,6 +626,7 @@ export class DashboardComponent {
         this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
       }
     });
+     }
       
     },
     error:(error:any)=>{
@@ -525,10 +644,26 @@ export class DashboardComponent {
 
 
   getStaticEnseignantAbsenceEleveHier(classeId:any) {
+    this.isEleveAbsentEnseignant = true;
     this.dashboardService.getStaticEnseignantAbsenceEleveHier(classeId).subscribe({next:(response:any)=>{
       this.ngxService.stop();
       this.listElevesAbsentsPourEnseignant = response;
-      console.log(response);
+      const options:any = {
+        lengthChange: false,
+        autoWidth: false,
+        dom: 'Bfrtip',
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis'],
+        columnDefs: [{
+          "defaultContent": "*",
+          "targets": "_all"
+        }]
+      };
+  
+      options['responsive'] = true;
+      $(document).ready(function () {
+        $('#abseleveenseignent').DataTable(options).buttons().containers().appendTo('#abseleveenseignent1 .col-sm-3:eq(0)');
+        
+      });
       
     },
     error:(error:any)=>{
@@ -542,11 +677,16 @@ export class DashboardComponent {
       this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
     }
   });
+ 
   }
 
   //****************************END ENSEIGNANT*********************************** */
   fermer(){
     this.isReglement = false;
+  }
+
+  fermerEnseignant(){
+    this.isEleveAbsentEnseignant= false;
   }
 
   ngAfterViewInit() {

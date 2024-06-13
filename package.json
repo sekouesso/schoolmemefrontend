@@ -31,6 +31,8 @@
     "datatables.net-buttons-dt": "^3.0.2",
     "datatables.net-dt": "^2.0.5",
     "jquery": "^3.6.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "jszip": "^3.10.1",
     "jwt-decode": "^4.0.0",
     "ngx-quill": "^25.0.3",

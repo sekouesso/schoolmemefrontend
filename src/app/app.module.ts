@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,12 +25,13 @@ import { CoefficientComponent } from './components/material-component/coefficien
 import { EleveComponent } from './components/material-component/eleve/eleve.component';
 import { EvaluationComponent } from './components/material-component/evaluation/evaluation.component';
 import { MenuopenDirective } from './menuopen.directive';
-import { DatePipe } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { QuillModule } from 'ngx-quill';
 import { SharedModule } from './shared/shared/shared.module';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DataTablesModule } from 'angular-datatables';
+import localeFr from '@angular/common/locales/fr';
 
 
 // const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -56,6 +57,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig ={
   fgsSize:100,
   hasProgressBar:false,
 }
+
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
   declarations: [
@@ -95,7 +98,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig ={
   providers: [
     provideAnimationsAsync(),
     DatePipe,
-    HttpClientModule,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true}
+    HttpClientModule,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},
+    { provide: LOCALE_ID, useValue: "fr-FR" }
   ],
   bootstrap: [AppComponent]
 })

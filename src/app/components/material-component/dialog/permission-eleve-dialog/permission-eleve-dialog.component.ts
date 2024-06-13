@@ -10,6 +10,7 @@ import { EleveService } from '../../../../services/eleve.service';
 import { NotificationService } from '../../../../services/notification.service';
 import { SnackbarService } from '../../../../services/snackbar.service';
 import { GlobalConstants } from '../../../../shared/global-constants';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-permission-eleve-dialog',
@@ -37,18 +38,18 @@ export class PermissionEleveDialogComponent {
     private snackbarService: SnackbarService,
     private ngxService: NgxUiLoaderService,
     private eleveService: EleveService,
+    public authService: AuthService,
     private notificationService: NotificationService,
     private dialog: MatDialog
   ) { }
   ngOnInit(): void {
     this.ngxService.start();
-    
     this.eleve = this.dialogData.data.eleve;
     this.eleves = this.dialogData.data.eleves;
     this.dialogAction = this.dialogData.action;
     this.tableDataNotifiaction(this.eleve.id);
     this.notifForm = this.fb.group({
-      eleveId:[null,[Validators.required]],
+      eleveId:[this.eleve.id,[Validators.required]],
       createdAt:[null],
     });
 

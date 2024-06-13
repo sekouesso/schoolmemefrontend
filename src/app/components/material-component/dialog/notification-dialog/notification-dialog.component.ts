@@ -29,6 +29,7 @@ export class NotificationDialogComponent {
   numero: any;
   eleves: any;
   parents: any;
+  parentId1: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData:any,
@@ -48,7 +49,8 @@ export class NotificationDialogComponent {
   ngOnInit(): void {
     let p: any = localStorage.getItem('user')
     let parent:any = JSON.parse(p);
-    console.log(parent.id);
+    this.eleves = parent.eleves;
+    this.parentId1= parent.id;
     
     
       this.date = this.transformDate(new Date());
@@ -104,7 +106,7 @@ if(this.dialogData.action === 'Add'){
       this.notificationForm.patchValue(data);
     }
 
-    this.getParents();
+    //this.getParents();
     this.getEleves();
     
   }
@@ -126,7 +128,7 @@ if(this.dialogData.action === 'Add'){
     })
   }
   getEleves() {
-    this.eleveService.getAll().subscribe({
+    this.eleveService.findAllByParentId(this.parentId1).subscribe({
       next:(response:any) => {
         this.eleves = response
       },

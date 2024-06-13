@@ -12,6 +12,7 @@ import { ReglementService } from '../../../../services/reglement.service';
 import { TarifsService } from '../../../../services/tarifs.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { ReglementDialogComponent } from '../reglement-dialog/reglement-dialog.component';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-reglement-eleve-dialog',
@@ -44,6 +45,7 @@ export class ReglementEleveDialogComponent {
     private ngxService: NgxUiLoaderService,
     private reglementService: ReglementService,
     private tarifsService: TarifsService,
+    public authService: AuthService,
     private dialog: MatDialog
   ) { }
 

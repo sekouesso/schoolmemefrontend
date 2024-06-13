@@ -34,4 +34,7 @@ export class DashboardService {
   getClasseEnseignant(enseignantId:any){
     return this.http.get(this.url+'/getClasseEnseignant/'+enseignantId,{headers:new HttpHeaders().set("Content-Type","Application/json")});
   }
+  getStaticAbsenceEleveBetweenDate1AndDate2(date1:any,date2:any){
+    return this.http.get(this.url+'/getStaticAbsenceEleveBetweenDate1AndDate2/'+date1+'/'+date2,{headers:new HttpHeaders().set("Content-Type","Application/json")});
+  }
 }

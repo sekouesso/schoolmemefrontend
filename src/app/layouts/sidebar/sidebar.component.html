@@ -48,182 +48,199 @@
                     </ul>
                 </li> -->
                 <!-- id="cours" (click)="addClass('cours')" [ngClass]="{'menu-open': activeElement === 'cours'}" -->
-                <li class="nav-item {{setMenuClass('/cours','menu-open')}}" #cours (click)="addMenuOpen(cours)"  > 
-                    <a  class="nav-link {{setMenuClass('/cours','active')}}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Cours
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/cours/cours')}}" routerLink="/school/cours/cours">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>cours</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/cours/matiere')}}" routerLink="/school/cours/matiere">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Matiere</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/cours/coefficient')}}" routerLink="/school/cours/coefficient">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Coefficient</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/cours/classe')}}" routerLink="/school/cours/classe">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>classe</p>
-                            </a>
-                        </li>
-                       
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/cours/emploi')}}" routerLink="/school/cours/emploi">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>emploi</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if (this.authService.isAdmin()) {
+                    <li class="nav-item {{setMenuClass('/cours','menu-open')}}" #cours (click)="addMenuOpen(cours)"  > 
+                        <a  class="nav-link {{setMenuClass('/cours','active')}}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Cours
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/cours/cours')}}" routerLink="/school/cours/cours">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>cours</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/cours/matiere')}}" routerLink="/school/cours/matiere">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Matiere</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/cours/coefficient')}}" routerLink="/school/cours/coefficient">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Coefficient</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/cours/classe')}}" routerLink="/school/cours/classe">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>classe</p>
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/cours/emploi')}}" routerLink="/school/cours/emploi">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>emploi</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                
                 <!-- id="eleves" (click)="addClass('eleves')" [ngClass]="{'menu-open': activeElement === 'eleves'}" -->
-                <li class="nav-item {{setMenuClass('/eleves','menu-open')}}"  #eleves (click)="addMenuOpen(eleves)">
-                    <a  class="nav-link {{setMenuClass('/eleves','active')}}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            eleves
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/eleves/eleve')}}" routerLink="/school/eleves/eleve">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>eleves</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/eleves/inscription')}}" routerLink="/school/eleves/inscription">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>inscription</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/eleves/reglement')}}" routerLink="/school/eleves/reglement">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>reglement</p>
-                            </a>
-                        </li>
-                      
-                    </ul>
-                </li>
+                @if (this.authService.isAdmin() ||this.authService.isEconome()) {
+                    <li class="nav-item {{setMenuClass('/eleves','menu-open')}}"  #eleves (click)="addMenuOpen(eleves)">
+                        <a  class="nav-link {{setMenuClass('/eleves','active')}}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                eleves
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/eleves/eleve')}}" routerLink="/school/eleves/eleve">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>eleves</p>
+                                </a>
+                            </li>
+                            @if (this.authService.isEconome()) {
+                                <li class="nav-item">
+                                    <a  class="nav-link {{setMenuActive('/school/eleves/inscription')}}" routerLink="/school/eleves/inscription">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>inscription</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a  class="nav-link {{setMenuActive('/school/eleves/reglement')}}" routerLink="/school/eleves/reglement">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>reglement</p>
+                                    </a>
+                                </li>
+                            }
+                            
+                          
+                        </ul>
+                    </li>
+                }
+                
                 <!-- id="enseignant" (click)="addClass('enseignant')" [ngClass]="{'menu-open': activeElement === 'enseignant'}" -->
-                <li class="nav-item {{setMenuClass('/enseignant','menu-open')}}" #enseignant (click)="addMenuOpen(enseignant)">
-                    <a  class="nav-link {{setMenuClass('/enseignant','active')}}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            enseignant
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/enseignant/enseignant')}}" routerLink="/school/enseignant/enseignant">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>enseignant</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/enseignant/note')}}" routerLink="/school/enseignant/note">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Note</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/enseignant/typenote')}}" routerLink="/school/enseignant/typenote">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Type de note</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/enseignant/evaluation')}}" routerLink="/school/enseignant/evaluation">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>evaluation</p>
-                            </a>
-                        </li>
-                       
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/enseignant/absence')}}" routerLink="/school/enseignant/absence">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>absence</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if (this.authService.isAdmin() || this.authService.isEnseignant()) {
+                    <li class="nav-item {{setMenuClass('/enseignant','menu-open')}}" #enseignant (click)="addMenuOpen(enseignant)">
+                        <a  class="nav-link {{setMenuClass('/enseignant','active')}}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                enseignant
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                           @if (this.authService.isAdmin()) {
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/enseignant/enseignant')}}" routerLink="/school/enseignant/enseignant">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>enseignant</p>
+                                </a>
+                            </li>
+                           }
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/enseignant/note')}}" routerLink="/school/enseignant/note">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Note</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/enseignant/typenote')}}" routerLink="/school/enseignant/typenote">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Type de note</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/enseignant/evaluation')}}" routerLink="/school/enseignant/evaluation">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>evaluation</p>
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/enseignant/absence')}}" routerLink="/school/enseignant/absence">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>absence</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                
                 <!-- id="parametre" (click)="addClass('parametre')" [ngClass]="{'menu-open': activeElement === 'parametre'}" -->
-                <li class="nav-item {{setMenuClass('/parametre','menu-open')}}" #parametre (click)="addMenuOpen(parametre)">
-                    <a  class="nav-link {{setMenuClass('/parametre','active')}}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            parametre
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/parametre/jours')}}" routerLink="/school/parametre/jours">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Jours</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/parametre/horaire')}}" routerLink="/school/parametre/horaire">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Horaire</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/parametre/appreciation')}}" routerLink="/school/parametre/appreciation">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Appreciation</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/parametre/cycle')}}" routerLink="/school/parametre/cycle">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>cycle</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/parametre/niveau')}}" routerLink="/school/parametre/niveau">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>niveau</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/parametre/anneScolaire')}}" routerLink="/school/parametre/anneScolaire">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Annee Scolaire</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a  class="nav-link {{setMenuActive('/school/parametre/notification')}}" routerLink="/school/parametre/notification">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Notification</p>
-                            </a>
-                        </li>
-                        
-                    </ul>
-                </li>
+                @if (this.authService.isAdmin()) {
+                    <li class="nav-item {{setMenuClass('/parametre','menu-open')}}" #parametre (click)="addMenuOpen(parametre)">
+                        <a  class="nav-link {{setMenuClass('/parametre','active')}}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                parametre
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/parametre/jours')}}" routerLink="/school/parametre/jours">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Jours</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/parametre/horaire')}}" routerLink="/school/parametre/horaire">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Horaire</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/parametre/appreciation')}}" routerLink="/school/parametre/appreciation">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Appreciation</p>
+                                </a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/parametre/cycle')}}" routerLink="/school/parametre/cycle">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>cycle</p>
+                                </a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/parametre/niveau')}}" routerLink="/school/parametre/niveau">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>niveau</p>
+                                </a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/parametre/anneScolaire')}}" routerLink="/school/parametre/anneScolaire">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Annee Scolaire</p>
+                                </a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a  class="nav-link {{setMenuActive('/school/parametre/notification')}}" routerLink="/school/parametre/notification">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Notification</p>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                }
+                
                 <!-- <li class="nav-item {{setMenuClass('/tarifs','menu-open')}}" >
                     <a  class="nav-link {{setMenuClass('/tarifs','active')}}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -242,14 +259,17 @@
                        
                     </ul>
                 </li> -->
-                <li class="nav-item">
-                    <a  class="nav-link" routerLink="/school/saisirnote" routerLinkActive="active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Saisir les notes
-                        </p>
-                    </a>
-                </li>
+                @if (this.authService.isAdmin()) {
+                    <li class="nav-item">
+                        <a  class="nav-link" routerLink="/school/saisirnote" routerLinkActive="active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Saisir les notes
+                            </p>
+                        </a>
+                    </li>
+                }
+               
                 <li class="nav-item">
                     <a  class="nav-link" routerLink="/school/tarifs" routerLinkActive="active">
                         <i class="nav-icon fas fa-tachometer-alt"></i>

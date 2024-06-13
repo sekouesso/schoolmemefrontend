@@ -20,7 +20,7 @@
                         <mat-form-field fxFlex appearance="fill">
                             <mat-label>eleve</mat-label>
                             <mat-select formControlName="eleveId" readonly>
-                                <mat-option *ngFor="let eleve of eleves" [value]="eleve.id">
+                                <mat-option [value]="eleve.id">
                                     {{eleve.nom}} {{eleve.prenom}}
                                 </mat-option>
                             </mat-select>

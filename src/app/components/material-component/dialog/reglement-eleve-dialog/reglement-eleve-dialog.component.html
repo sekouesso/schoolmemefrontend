@@ -66,9 +66,11 @@
     </mat-card-footer>
 </mat-card>
 <mat-dialog-actions >
-    <button  (click)="handleAddAction()" mat-raised-button color="primary">
-        <mat-icon>add_circle</mat-icon> Ajout 
-    </button>
+    @if (this.authService.isEconome()) {
+        <button  (click)="handleAddAction()" mat-raised-button color="primary">
+            <mat-icon>add_circle</mat-icon> Ajout 
+        </button>
+    }
     <span class="spacer"></span>
     <button mat-raised-button color="warn" mat-dialog-close>
         <mat-icon>cancel</mat-icon>Close
